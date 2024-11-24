@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cases de Sucesso - EscolaMove</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .top-bar {
+            background-color: #FF5722;
+            padding: 0.5rem 2rem;
+            text-align: right;
+        }
+
+        .login-buttons {
+            display: inline-flex;
+            gap: 1rem;
+        }
+
+        .login-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.3rem 1rem;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-login {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-login {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            color: #FF5722;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #333;
+            font-weight: 300;
+            font-size: 1rem;
+            display: block;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #FF5722;
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .cases-hero {
+            background-color: #f5f5f5;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .cases-hero h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cases-hero p {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cases-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .case-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .case-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .case-image {
+            width: 100%;
+            height: 200px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #FF5722;
+        }
+
+        .case-content {
+            padding: 2rem;
+        }
+
+        .case-content h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .case-content p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .stats-section {
+            background: #f9f9f9;
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: #FF5722;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .testimonials {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .testimonial-content {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .testimonial-role {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .menu-btn {
+                display: block;
+            }
+
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .cases-hero h1 {
+                font-size: 2rem;
+            }
+
+            .cases-hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="login-buttons">
+            <a href="login-cliente.html" class="login-btn user-login">
+                <i>👤</i> Área do Cliente
+            </a>
+            <a href="login-adm.html" class="login-btn admin-login">
+                <i>🔒</i> Área Administrativa
+            </a>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="logo-container">
+            <a href="/" class="logo">
+                EscolaMove
+                <span>Transporte & Tecnologia</span>
+            </a>
+        </div>
+        
+        <button class="menu-btn">☰</button>
+
+        <nav class="nav">
+            <a href="home.html" class="nav-item">Home</a>
+            <a href="quem-somos.html" class="nav-item">Quem Somos</a>
+            <a href="noticias.html" class="nav-item">Notícias</a>
+            <a href="quanto-custa.html" class="nav-item">Quanto Custa</a>
+            <a href="onde-estamos.html" class="nav-item">Onde Estamos</a>
+            <a href="como-fazemos.html" class="nav-item">Como Fazemos</a>
+            <a href="cases.html" class="nav-item">Cases de Sucesso</a>
+            <a href="links.html" class="nav-item">Links</a>
+        </nav>
+    </header>
+
+    <div class="cases-hero">
+        <h1>Cases de Sucesso</h1>
+        <p>Conheça algumas das histórias de sucesso e parcerias que construímos ao longo dos anos</p>
+    </div>
+
+    <main class="cases-content">
+        <div class="case-grid">
+            <div class="case-card">
+                <div class="case-image">🏫</div>
+                <div class="case-content">
+                    <h3>Colégio Seice</h3>
+                    <p>Implementação de sistema integrado de transporte para mais de 500 alunos, resultando em 98% de satisfação dos pais.</p>
+                    <p>Redução de 30% no tempo médio das rotas.</p>
+                </div>
+            </div>
+
+            <div class="case-card">
+                <div class="case-image">🎓</div>
+                <div class="case-content">
+                    <h3>Escola Internacional</h3>
+                    <p>Desenvolvimento de solução personalizada para atender alunos em diferentes turnos e atividades extracurriculares.</p>
+                    <p>Aumento de 45% na eficiência operacional.</p>
+                </div>
+            </div>
+
+            <div class="case-card">
+                <div class="case-image">📚</div>
+                <div class="case-content">
+                    <h3>Rede Municipal</h3>
+                    <p>Gestão completa da frota escolar municipal, atendendo 15 escolas e mais de 2000 alunos diariamente.</p>
+                    <p>Economia de 25% nos custos operacionais.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Anos de Experiência</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">5000+</div>
+                    <div class="stat-label">Alunos Transportados</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Satisfação dos Clientes</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">30+</div>
+                    <div class="stat-label">Escolas Parceiras</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonials">
+            <h2>Depoimentos</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"A parceria com a EscolaMove transformou completamente nossa logística de transporte. A tecnologia e profissionalismo da equipe são impressionantes."</p>
+                    <div class="testimonial-author">Tia Bia</div>
+                    <div class="testimonial-role">Diretora - Colégio Seice</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"O aplicativo de monitoramento trouxe mais tranquilidade para os pais e eficiência para nossa gestão de transporte."</p>
+                    <div class="testimonial-author">João Santos</div>
+                    <div class="testimonial-role">Coordenador - Escola Internacional</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-content">"A segurança e pontualidade do serviço são excepcionais. Nossa comunidade escolar está muito satisfeita com os resultados."</p>
+                    <div class="testimonial-author">Ana Oliveira</div>
+                    <div class="testimonial-role">Secretária de Educação</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const menuBtn = document.querySelector('.menu-btn');
+        const nav = document.querySelector('.nav');
+        
+        menuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

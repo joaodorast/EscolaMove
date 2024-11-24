@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EscolaMove - Transporte & Tecnologia</title>
+    <style>
+    
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/api/placeholder/1920/600');
+            background-size: cover;
+            color: white;
+            padding: 8rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-button {
+            background-color: #FF5722;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #f44336;
+        }
+
+        .features {
+            padding: 4rem 2rem;
+            background-color: #f5f5f5;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #FF5722;
+            margin-bottom: 1rem;
+        }
+
+        .statistics {
+            padding: 4rem 2rem;
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonials {
+            padding: 4rem 2rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: #f5f5f5;
+            padding: 2rem;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            font-size: 4rem;
+            color: #FF5722;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            opacity: 0.2;
+        }
+
+        .contact-section {
+            padding: 4rem 2rem;
+            background-color: #333;
+            color: white;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .section-title.light h2 {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .features-grid, .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="hero">
+            <h1>Transformando o Transporte Escolar</h1>
+            <p>Soluções inovadoras e seguras para o transporte de estudantes, combinando tecnologia de ponta com atendimento personalizado.</p>
+            <a href="quanto-custa.html" class="cta-button">Solicite um Orçamento</a>
+        </section>
+
+        <section class="features">
+            <div class="section-title">
+                <h2>Por que escolher a EscolaMove?</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚌</div>
+                    <h3>Monitoramento em Tempo Real</h3>
+                    <p>Acompanhe o trajeto do seu filho em tempo real através do nosso aplicativo exclusivo.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Segurança Garantida</h3>
+                    <p>Motoristas capacitados e veículos equipados com os mais modernos sistemas de segurança.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Comunicação Integrada</h3>
+                    <p>Sistema de comunicação direta entre pais, escola e motoristas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <h3>Pontualidade</h3>
+                    <p>Otimização de rotas e compromisso com horários para garantir tranquilidade na sua rotina.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="statistics">
+            <div class="section-title light">
+                <h2>Números que Impressionam</h2>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>1500+</h3>
+                    <p>Alunos Transportados</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <p>Escolas Parceiras</p>
+                </div>
+                <div class="stat-item">
+                    <h3>98%</h3>
+                    <p>Satisfação dos Pais</p>
+                </div>
+                <div class="stat-item">
+                    <h3>0</h3>
+                    <p>Acidentes em 5 Anos</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <div class="section-title">
+                <h2>O que Dizem Nossos Clientes</h2>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p>"O serviço da EscolaMove transformou nossa rotina. A tranquilidade de saber onde meu filho está é impagável."</p>
+                    <strong>- Maria Silva, mãe do Pedro</strong>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Profissionalismo e pontualidade impecáveis. Recomendo a todos os pais que buscam segurança."</p>
+                    <strong>- João Santos, pai da Eloá</strong>
+                </div>
+                <div class="testimonial-card">
+                    <p>"O aplicativo de monitoramento é fantástico! Consigo acompanhar todo o trajeto em tempo real."</p>
+                    <strong>- Ana Oliveira, mãe do Miguel</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="section-title light">
+                <h2>Entre em Contato</h2>
+            </div>
+            <div class="contact-grid">
+                <div>
+                    <h3>Endereço</h3>
+                    <p>Campos Elisios, 1000</p>
+                    <p>Colégio Seice - Rj</p>
+                </div>
+                <div>
+                    <h3>Contato</h3>
+                    <p>Tel: (11) 9999-9999</p>
+                    <p>Email: contato@escolamove.com.br</p>
+                </div>
+                <div>
+                    <h3>Horário</h3>
+                    <p>Segunda a Sexta</p>
+                    <p>8:00 - 18:00</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+       
+        const stats = document.querySelectorAll('.stat-item h3');
+        
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+                    const value = parseInt(target.innerText);
+                    let current = 0;
+                    const increment = value / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= value) {
+                            target.innerText = value + (value === 0 ? '' : '+');
+                            clearInterval(timer);
+                        } else {
+                            target.innerText = Math.ceil(current) + '+';
+                        }
+                    }, 20);
+                    observer.unobserve(target);
+                }
+            });
+        }, observerOptions);
+
+        stats.forEach(stat => observer.observe(stat));
+    </script>
+</body>
+</html>

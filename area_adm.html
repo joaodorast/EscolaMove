@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .admin-logo {
+            color: #FF5722;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .admin-logo span {
+            color: white;
+            font-weight: 300;
+            font-size: 0.8rem;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .admin-nav {
+            list-style: none;
+        }
+
+        .admin-nav-item {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .admin-nav-item:hover {
+            background-color: rgba(255, 87, 34, 0.1);
+            color: #FF5722;
+        }
+
+        .admin-nav-item.active {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            background-color: #f5f5f5;
+        }
+
+        .top-header {
+            background-color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #FF5722;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .admin-name {
+            font-weight: 500;
+        }
+
+        .admin-role {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .dashboard-content {
+            padding: 2rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .card-title {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .card-change {
+            color: #4CAF50;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+        }
+
+        .recent-activity {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .activity-title {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .activity-icon {
+            width: 35px;
+            height: 35px;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1976D2;
+        }
+
+        .activity-details h4 {
+            color: #333;
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .activity-details p {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .activity-time {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <a href="/" class="admin-logo">
+                EscolaMove
+                <span>Painel Administrativo</span>
+            </a>
+            <nav class="admin-nav">
+                <a href="area_adm.html" class="admin-nav-item active">📊 Dashboard</a>
+                <a href="alunos.html" class="admin-nav-item">👥 Alunos</a>
+                <a href="rotas.html" class="admin-nav-item">🚌 Rotas</a>
+                <a href="motoristas.html" class="admin-nav-item">🚘 Motoristas</a>
+                <a href="escolas.html" class="admin-nav-item">🏫 Escolas</a>
+                <a href="pagamentos.html" class="admin-nav-item">💰 Pagamentos</a>
+                <a href="relatorios.html" class="admin-nav-item">📝 Relatórios</a>
+                <a href="configuraçoes.html" class="admin-nav-item">⚙️ Configurações</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <h2>Dashboard</h2>
+                <div class="admin-info">
+                    <div class="admin-avatar">Batata</div>
+                    <div>
+                        <div class="admin-name">Admin</div>
+                        <div class="admin-role">Administrador</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-title">Total de Alunos</div>
+                        <div class="card-value">1,234</div>
+                        <div class="card-change">↑ 12% este mês</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-title">Rotas Ativas</div>
+                        <div class="card-value">42</div>
+                        <div class="card-change">↑ 3 novas rotas</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-title">Motoristas Ativos</div>
+                        <div class="card-value">28</div>
+                        <div class="card-change">↑ 2 este mês</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-title">Receita Mensal</div>
+                        <div class="card-value">R$ 85k</div>
+                        <div class="card-change">↑ 8% este mês</div>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3 class="activity-title">Atividades Recentes</h3>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <div class="activity-info">
+                                <div class="activity-icon">👥</div>
+                                <div class="activity-details">
+                                    <h4>Novo Aluno Registrado</h4>
+                                    <p>João Silva foi adicionado à rota #42</p>
+                                </div>
+                            </div>
+                            <div class="activity-time">Há 5 minutos</div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-info">
+                                <div class="activity-icon">🚌</div>
+                                <div class="activity-details">
+                                    <h4>Rota Modificada</h4>
+                                    <p>Rota #38 foi atualizada</p>
+                                </div>
+                            </div>
+                            <div class="activity-time">Há 2 horas</div>
+                        </li>
+                        <li class="activity-item">
+                            <div class="activity-info">
+                                <div class="activity-icon">💰</div>
+                                <div class="activity-details">
+                                    <h4>Pagamento Recebido</h4>
+                                    <p>Pagamento de R$ 350,00 confirmado</p>
+                                </div>
+                            </div>
+                            <div class="activity-time">Há 3 horas</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

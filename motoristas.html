@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .admin-logo {
+            color: #FF5722;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .admin-logo span {
+            color: white;
+            font-weight: 300;
+            font-size: 0.8rem;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .admin-nav {
+            list-style: none;
+        }
+
+        .admin-nav-item {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .admin-nav-item:hover {
+            background-color: rgba(255, 87, 34, 0.1);
+            color: #FF5722;
+        }
+
+        .admin-nav-item.active {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            background-color: #f5f5f5;
+        }
+
+        .top-header {
+            background-color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #FF5722;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .drivers-content {
+            padding: 2rem;
+        }
+
+        .actions-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 300px;
+        }
+
+        .add-driver-btn {
+            background-color: #FF5722;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .drivers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .driver-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .driver-header {
+            background-color: #f5f5f5;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .driver-photo {
+            width: 60px;
+            height: 60px;
+            background-color: #FF5722;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .driver-info {
+            flex: 1;
+        }
+
+        .driver-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.3rem;
+        }
+
+        .driver-status {
+            font-size: 0.8rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .status-active {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .status-inactive {
+            background-color: #FFEBEE;
+            color: #C62828;
+        }
+
+        .driver-details {
+            padding: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+            color: #666;
+        }
+
+        .driver-actions {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .edit-btn {
+            background-color: #E3F2FD;
+            color: #1976D2;
+        }
+
+        .delete-btn {
+            background-color: #FFEBEE;
+            color: #C62828;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            width: 500px;
+            margin: 100px auto;
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .cancel-btn {
+            background-color: #f5f5f5;
+            color: #666;
+        }
+
+        .save-btn {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .drivers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 90%;
+                margin: 50px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <a href="/" class="admin-logo">
+                EscolaMove
+                <span>Painel Administrativo</span>
+            </a>
+            <nav class="admin-nav">
+                <a href="area_adm.html" class="admin-nav-item">📊 Dashboard</a>
+                <a href="alunos.html" class="admin-nav-item">👥 Alunos</a>
+                <a href="rotas.html" class="admin-nav-item">🚌 Rotas</a>
+                <a href="motoristas.html" class="admin-nav-item active">🚘 Motoristas</a>
+                <a href="escolas.html" class="admin-nav-item">🏫 Escolas</a>
+                <a href="pagamentos.html" class="admin-nav-item">💰 Pagamentos</a>
+                <a href="relatorios.html" class="admin-nav-item">📝 Relatórios</a>
+                <a href="configuraçoes.html" class="admin-nav-item">⚙️ Configurações</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <h2>Gerenciamento de Motoristas</h2>
+                <div class="admin-info">
+                    <div class="admin-avatar">B</div>
+                    <div>
+                        <div class="admin-name">Admin</div>
+                        <div class="admin-role">Administrador</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="drivers-content">
+                <div class="actions-bar">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Buscar motorista..." class="search-input" id="searchDriver">
+                    </div>
+                    <button class="add-driver-btn" onclick="openModal()">
+                        ➕ Adicionar Motorista
+                    </button>
+                </div>
+
+                <div class="drivers-grid" id="driversGrid"></div>
+            </div>
+        </main>
+    </div>
+
+    <div id="driverModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Adicionar Motorista</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="driverForm">
+                <div class="form-group">
+                    <label for="driverName">Nome Completo</label>
+                    <input type="text" id="driverName" required>
+                </div>
+                <div class="form-group">
+                    <label for="driverCNH">CNH</label>
+                    <input type="text" id="driverCNH" required>
+                </div>
+                <div class="form-group">
+                    <label for="driverPhone">Telefone</label>
+                    <input type="tel" id="driverPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="driverVehicle">Veículo</label>
+                    <input type="text" id="driverVehicle" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="action-btn cancel-btn" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="action-btn save-btn">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const drivers = [
+            {
+                id: 1,
+                name: "Carlos Silva",
+                cnh: "12345678900",
+                phone: "(11) 98765-4321",
+                vehicle: "Van Mercedes Sprinter",
+                status: "active",
+                routes: 3
+            },
+            {
+                id: 2,
+                name: "Maria Santos",
+                cnh: "98765432100",
+                phone: "(11) 91234-5678",
+                vehicle: "Micro-ônibus Volare",
+                status: "active",
+                routes: 2
+            },
+            {
+                id: 3,
+                name: "João Oliveira",
+                cnh: "45678912300",
+                phone: "(11) 94567-8912",
+                vehicle: "Van Renault Master",
+                status: "inactive",
+                routes: 0
+            }
+        ];
+
+        let editingDriverId = null;
+
+        function createDriverCard(driver) {
+            return `
+                <div class="driver-card">
+                    <div class="driver-header">
+                        <div class="driver-photo">${driver.name.charAt(0)}</div>
+                        <div class="driver-info">
+                            <div class="driver-name">${driver.name}</div>
+                            <span class="driver-status status-${driver.status}">
+                                ${driver.status === 'active' ? 'Ativo' : 'Inativo'}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="driver-details">
+                        <div class="detail-item">📱 ${driver.phone}</div>
+                        <div class="detail-item">🪪 CNH: ${driver.cnh}</div>
+                        <div class="detail-item">🚐 ${driver.vehicle}</div>
+                        <div class="detail-item">🛣️ ${driver.routes} rotas ativas</div>
+                    </div>
+                    <div class="driver-actions">
+                        <button class="action-btn edit-btn" onclick="editDriver(${driver.id})">Editar</button>
+                        <button class="action-btn delete-btn" onclick="deleteDriver(${driver.id})">Excluir</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderDrivers(driversArray = drivers) {
+            const grid = document.getElementById('driversGrid');
+            grid.innerHTML = driversArray.map(driver => createDriverCard(driver)).join('');
+        }
+
+        document.getElementById('searchDriver').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredDrivers = drivers.filter(driver => 
+                driver.name.toLowerCase().includes(searchTerm) ||
+                driver.phone.includes(searchTerm) ||
+                driver.cnh.includes(searchTerm)
+            );
+            renderDrivers(filteredDrivers);
+        });
+
+        function openModal() {
+            document.getElementById('driverModal').style.display = 'block';
+            document.getElementById('driverForm').reset();
+            editingDriverId = null; 
+
+            document.querySelector('.modal-title').textContent = 'Adicionar Motorista';
+        }
+
+        function closeModal() {
+            document.getElementById('driverModal').style.display = 'none';
+            document.getElementById('driverForm').reset();
+            editingDriverId = null; 
+        }
+
+        document.getElementById('driverForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const newDriver = {
+                id: editingDriverId || (drivers.length + 1),
+                name: document.getElementById('driverName').value,
+                cnh: document.getElementById('driverCNH').value,
+                phone: document.getElementById('driverPhone').value,
+                vehicle: document.getElementById('driverVehicle').value,
+                status: "active",
+                routes: 0
+            };
+
+            if (editingDriverId) {
+                const index = drivers.findIndex(driver => driver.id === editingDriverId);
+                drivers[index] = newDriver;
+            } else {
+                drivers.push(newDriver);
+            }
+
+            renderDrivers();
+            closeModal();
+        });
+
+        function editDriver(id) {
+            const driver = drivers.find(driver => driver.id === id);
+            if (driver) {
+                document.getElementById('driverName').value = driver.name;
+                document.getElementById('driverCNH').value = driver.cnh;
+                document.getElementById('driverPhone').value = driver.phone;
+                document.getElementById('driverVehicle').value = driver.vehicle;
+                editingDriverId = driver.id; 
+                document.querySelector('.modal-title').textContent = 'Editar Motorista';
+                openModal();
+            }
+        }
+
+        function deleteDriver(id) {
+            const confirmDelete = confirm('Você tem certeza que deseja excluir este motorista?');
+            if (confirmDelete) {
+                const index = drivers.findIndex(driver => driver.id === id);
+                if (index > -1) {
+                    drivers.splice(index, 1);
+                    renderDrivers();
+                }
+            }
+        }
+
+        renderDrivers();
+    </script>
+</body>
+</html>

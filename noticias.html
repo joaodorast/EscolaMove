@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notícias - EscolaMove</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .top-bar {
+            background-color: #FF5722;
+            padding: 0.5rem 2rem;
+            text-align: right;
+        }
+
+        .login-buttons {
+            display: inline-flex;
+            gap: 1rem;
+        }
+
+        .login-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.3rem 1rem;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-login {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-login {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            color: #FF5722;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #333;
+            font-weight: 300;
+            font-size: 1rem;
+            display: block;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #FF5722;
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+        }
+
+       
+        .news-hero {
+            background-color: #f5f5f5;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .news-hero h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .news-hero p {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .news-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .news-info {
+            padding: 1.5rem;
+        }
+
+        .news-date {
+            color: #FF5722;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-title {
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .news-excerpt {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+            color: #FF5722;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .page-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background: white;
+            color: #333;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .page-btn.active {
+            background: #FF5722;
+            color: white;
+            border-color: #FF5722;
+        }
+
+        .page-btn:hover:not(.active) {
+            background: #f5f5f5;
+        }
+
+        .categories {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category-btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            background: #f5f5f5;
+            color: #333;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn.active {
+            background: #FF5722;
+            color: white;
+        }
+
+        .category-btn:hover:not(.active) {
+            background: #e0e0e0;
+        }
+
+        @media (max-width: 1024px) {
+            .nav {
+                gap: 1.5rem;
+            }
+            
+            .nav-item {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-btn {
+                display: block;
+            }
+
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .news-hero h1 {
+                font-size: 2rem;
+            }
+
+            .news-hero p {
+                font-size: 1rem;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="login-buttons">
+            <a href="area_usuario/area_cliente.html" class="login-btn user-login">
+                <i>👤</i> Área do Cliente
+            </a>
+            <a href="area_adm.html" class="login-btn admin-login">
+                <i>🔒</i> Área Administrativa
+            </a>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="logo-container">
+            <a href="/" class="logo">
+                EscolaMove
+                <span>Transporte & Tecnologia</span>
+            </a>
+        </div>
+        
+        <button class="menu-btn">☰</button>
+
+        <nav class="nav">
+            <a href="home.html" class="nav-item">Home</a>              
+            <a href="quem-somos.html" class="nav-item">Quem Somos</a>
+            <a href="noticias.html" class="nav-item">Notícias</a>
+            <a href="quanto-custa.html" class="nav-item">Quanto Custa</a>
+            <a href="onde-estamos.html" class="nav-item">Onde Estamos</a>
+            <a href="como-fazemos.html" class="nav-item">Como Fazemos</a>
+            <a href="cases.html" class="nav-item">Cases de Sucesso</a>
+            <a href="links.html" class="nav-item">Links</a>
+        </nav>
+    </header>
+
+    <div class="news-hero">
+        <h1>Notícias e Atualizações</h1>
+        <p>Fique por dentro das últimas novidades sobre transporte escolar, tecnologia e educação.</p>
+    </div>
+
+    <main class="news-content">
+        <div class="categories">
+            <button class="category-btn active">Todos</button>
+            <button class="category-btn">Tecnologia</button>
+            <button class="category-btn">Segurança</button>
+            <button class="category-btn">Educação</button>
+            <button class="category-btn">Novidades</button>
+        </div>
+
+        <div class="news-grid">
+            
+            <article class="news-card">
+                <div class="news-image">🚌</div>
+                <div class="news-info">
+                    <div class="news-date">23 de Novembro, 2024</div>
+                    <h2 class="news-title">Nova Funcionalidade de Rastreamento em Tempo Real</h2>
+                    <p class="news-excerpt">Lançamos nossa nova funcionalidade de rastreamento que permite aos pais acompanharem o trajeto escolar em tempo real através do aplicativo.</p>
+                    <a href="#" class="read-more">Ler mais →</a>
+                </div>
+            </article>
+
+            
+            <article class="news-card">
+                <div class="news-image">🛡️</div>
+                <div class="news-info">
+                    <div class="news-date">22 de Novembro, 2024</div>
+                    <h2 class="news-title">Certificação de Segurança Renovada</h2>
+                    <p class="news-excerpt">Nossa frota passou por mais uma inspeção rigorosa e manteve a certificação de segurança com nota máxima em todos os quesitos.</p>
+                    <a href="#" class="read-more">Ler mais →</a>
+                </div>
+            </article>
+
+          
+            <article class="news-card">
+                <div class="news-image">📱</div>
+                <div class="news-info">
+                    <div class="news-date">21 de Novembro, 2024</div>
+                    <h2 class="news-title">Atualização do Aplicativo EscolaMove</h2>
+                    <p class="news-excerpt">Nova versão do aplicativo traz melhorias na interface e novas funcionalidades para melhor experiência dos usuários.</p>
+                    <a href="#" class="read-more">Ler mais →</a>
+                </div>
+            </article>
+
+            
+            <article class="news-card">
+                <div class="news-image">🎓</div>
+                <div class="news-info">
+                    <div class="news-date">20 de Novembro, 2024</div>
+                    <h2 class="news-title">Programa de Treinamento para Motoristas</h2>
+                    <p class="news-excerpt">Iniciamos mais uma turma do nosso programa de capacitação contínua para motoristas, focando em segurança e atendimento.</p>
+                    <a href="#" class="read-more">Ler mais →</a>
+                </div>
+            </article>
+
+            
+            <article class="news-card">
+                <div class="news-image">🌍</div>
+                <div class="news-info">
+                    <div class="news-date">19 de Novembro, 2024</div>
+                    <h2 class="news-title">Expansão para Novas Regiões</h2>
+                    <p class="news-excerpt">EscolaMove anuncia expansão dos serviços para mais três cidades, ampliando nossa cobertura de atendimento.</p>
+                    <a href="#" class="read-more">Ler mais →</a>
+                </div>
+            </article>
+
+            <article class="news-card">
+                <div class="news-image">🤝</div>
+                <div class="news-info">
+                    <div class="news-date">18 de Novembro, 2024</div>
+                    <h2 class="news-title">Parceria com Novas Escolas</h2>
+                    <p class="news-excerpt">Fechamos parceria com mais cinco escolas da região, fortalecendo nossa presença no setor educacional.</p>
+                    <a href="#" class="read-more">Ler mais →</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="pagination">
+            <a href="#" class="page-btn active">1</a>
+            <a href="#" class="page-btn">2</a>
+            <a href="#" class="page-btn">3</a>
+            <a href="#" class="page-btn">4</a>
+            <a href="#" class="page-btn">→</a>
+        </div>
+    </main>
+
+    <script>
+        const menuBtn = document.querySelector('.menu-btn');
+        const nav = document.querySelector('.nav');
+        
+        menuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+       
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+               
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                
+                button.classList.add('active');
+            });
+        });
+
+     
+        const pageButtons = document.querySelectorAll('.page-btn');
+        
+        pageButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+               
+                pageButtons.forEach(btn => btn.classList.remove('active'));
+              
+                button.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

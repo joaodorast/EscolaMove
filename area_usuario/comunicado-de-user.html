@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EscolaMove - Comunicados</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .client-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .client-logo {
+            color: #FF5722;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .client-logo span {
+            color: white;
+            font-weight: 300;
+            font-size: 0.8rem;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .client-nav {
+            list-style: none;
+        }
+
+        .client-nav-item {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .client-nav-item:hover {
+            background-color: rgba(255, 87, 34, 0.1);
+            color: #FF5722;
+        }
+
+        .client-nav-item.active {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            background-color: #f5f5f5;
+        }
+
+        .top-header {
+            background-color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .client-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #FF5722;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .client-name {
+            font-weight: 500;
+        }
+
+        .client-role {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .dashboard-content {
+            padding: 2rem;
+        }
+
+        .announcement-filters {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .filter-select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-width: 150px;
+        }
+
+        .announcement-card {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .announcement-header {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .announcement-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .announcement-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .announcement-content {
+            padding: 1.5rem;
+            color: #444;
+            line-height: 1.6;
+        }
+
+        .announcement-footer {
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .announcement-category {
+            background-color: #E8F5E9;
+            color: #4CAF50;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .announcement-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-button {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .action-button:hover {
+            color: #FF5722;
+        }
+
+        .unread-badge {
+            background-color: #FF5722;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .client-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .announcement-filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="client-container">
+        <aside class="sidebar">
+            <a href="/" class="client-logo">
+                EscolaMove
+                <span>Área do Cliente</span>
+            </a>
+            <nav class="client-nav">
+                <a href="area_cliente.html" class="client-nav-item">📊 Início</a>
+                <a href="rotas-de-user.html" class="client-nav-item">🚌 Minha Rota</a>
+                <a href="pagamentos-de-user.html" class="client-nav-item">💰 Pagamentos</a>
+                <a href="calendario-de-user.html" class="client-nav-item">📅 Calendário</a>
+                <a href="comunicado-de-user.html" class="client-nav-item active">📝 Comunicados</a>
+                <a href="configurações-de-user.html" class="client-nav-item">⚙️ Configurações</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <h2>Comunicados <span class="unread-badge">2 não lidos</span></h2>
+                <div class="client-info">
+                    <div class="client-avatar">JS</div>
+                    <div>
+                        <div class="client-name">João Silva</div>
+                        <div class="client-role">Aluno</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <div class="announcement-filters">
+                    <select class="filter-select">
+                        <option value="all">Todos os comunicados</option>
+                        <option value="unread">Não lidos</option>
+                        <option value="important">Importantes</option>
+                    </select>
+                    <select class="filter-select">
+                        <option value="all">Todas as categorias</option>
+                        <option value="route">Alteração de Rota</option>
+                        <option value="payment">Pagamentos</option>
+                        <option value="schedule">Horários</option>
+                        <option value="general">Geral</option>
+                    </select>
+                </div>
+
+                <div class="announcement-card">
+                    <div class="announcement-header">
+                        <div class="announcement-title">
+                            Alteração temporária na rota - Obras na Av. Principal
+                            <span class="unread-badge">Novo</span>
+                        </div>
+                        <div class="announcement-date">22/11/2024</div>
+                    </div>
+                    <div class="announcement-content">
+                        <p>Informamos que devido às obras de manutenção na Av. Principal, nossa rota será temporariamente alterada entre os dias 25/11 e 30/11. O horário de embarque será antecipado em 15 minutos para compensar o desvio.</p>
+                        <p>Por favor, fique atento ao novo horário: 06:30</p>
+                    </div>
+                    <div class="announcement-footer">
+                        <span class="announcement-category">Alteração de Rota</span>
+                        <div class="announcement-actions">
+                            <button class="action-button">👁️ Marcar como lido</button>
+                            <button class="action-button">📱 Receber no WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="announcement-card">
+                    <div class="announcement-header">
+                        <div class="announcement-title">
+                            Reajuste anual da mensalidade 2025
+                            <span class="unread-badge">Novo</span>
+                        </div>
+                        <div class="announcement-date">20/11/2024</div>
+                    </div>
+                    <div class="announcement-content">
+                        <p>Prezados clientes, informamos que a partir de janeiro/2025 haverá reajuste na mensalidade do transporte escolar conforme previsto em contrato. Os novos valores e condições de pagamento já estão disponíveis na área de Pagamentos.</p>
+                    </div>
+                    <div class="announcement-footer">
+                        <span class="announcement-category">Pagamentos</span>
+                        <div class="announcement-actions">
+                            <button class="action-button">👁️ Marcar como lido</button>
+                            <button class="action-button">📱 Receber no WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="announcement-card">
+                    <div class="announcement-header">
+                        <div class="announcement-title">
+                            Agenda de final de ano
+                        </div>
+                        <div class="announcement-date">15/11/2024</div>
+                    </div>
+                    <div class="announcement-content">
+                        <p>Confira o calendário especial de funcionamento para o período de festas de final de ano. O último dia de operação será 20/12/2024, retornando em 15/01/2025.</p>
+                        <p>Acesse a área de Calendário para mais detalhes sobre as datas.</p>
+                    </div>
+                    <div class="announcement-footer">
+                        <span class="announcement-category">Horários</span>
+                        <div class="announcement-actions">
+                            <button class="action-button">📱 Receber no WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>                       

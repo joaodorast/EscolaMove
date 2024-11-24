@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>EscolaMove - Área Administrativa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(to right, #000000, #1a1a1a);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border-bottom: 2px solid #ff6b00;
+        }
+
+        .logo {
+            color: #ff6b00;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255,107,0,0.3);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 4rem auto;
+            padding: 0 1rem;
+            flex: 1;
+        }
+
+        .login-box {
+            background: #1a1a1a;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+            border: 1px solid #333;
+        }
+
+        .login-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255,107,0,0.1);
+        }
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+     .login-title h1 {
+       font-size: 2rem;
+       margin-bottom: 0.5rem;
+       background: linear-gradient(to right, #ff6b00, #ff8533);
+      -webkit-background-clip: text;
+       background-clip: text;
+        color: transparent;
+        text-shadow: 0 0 20px rgba(255,107,0,0.1); 
+    } 
+
+        .login-title p {
+            color: #888;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ff6b00;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #333;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #2d2d2d;
+            color: white;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff6b00;
+            box-shadow: 0 0 0 3px rgba(255,107,0,0.1);
+        }
+
+        .submit-btn {
+            background: linear-gradient(to right, #ff6b00, #ff8533);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,107,0,0.3);
+            background: linear-gradient(to right, #ff8533, #ff9966);
+        }
+
+        .error-message {
+            color: #ff4444;
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .error-message.visible {
+            opacity: 1;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 1rem;
+        }
+
+        .forgot-password a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #ff6b00;
+        }
+
+        .security-notice {
+            text-align: center;
+            margin-top: 2rem;
+            color: #888;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .security-notice i {
+            color: #ff6b00;
+        }
+
+        footer {
+            background: linear-gradient(to right, #000000, #1a1a1a);
+            color: #888;
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+            border-top: 2px solid #ff6b00;
+        }
+
+        .form-group input:hover {
+            border-color: #ff6b00;
+            box-shadow: 0 0 10px rgba(255,107,0,0.1);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255,107,0,0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255,107,0,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,107,0,0); }
+        }
+
+        .submit-btn:focus {
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="logo">EscolaMove</a>
+        <a href="index.html" style="color: #ff6b00; text-decoration: none; font-weight: 500;">Voltar ao site</a>
+    </header>
+
+    <div class="container">
+        <div class="login-box">
+            <div class="login-title">
+                <h1>Área Administrativa</h1>
+                <p>Acesso restrito a funcionários autorizados</p>
+            </div>
+
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="username">Usuário</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="submit-btn">Acessar Sistema</button>
+                <div id="error-message" class="error-message">Usuário ou senha incorretos</div>
+                <div class="forgot-password">
+                    <a href="#">Esqueceu sua senha?</a>
+                </div>
+            </form>
+
+            <div class="security-notice">
+                <i>🔒</i>
+                <p>Área protegida com conexão segura</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 EscolaMove. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('admin-login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+            
+            if (password === '12345') {
+                window.location.href = 'area_adm.html';
+            } else {
+                errorMessage.classList.add('visible');
+                setTimeout(() => {
+                    errorMessage.classList.remove('visible');
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>

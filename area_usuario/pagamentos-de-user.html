@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EscolaMove - Pagamentos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .client-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .client-logo {
+            color: #FF5722;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .client-logo span {
+            color: white;
+            font-weight: 300;
+            font-size: 0.8rem;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .client-nav {
+            list-style: none;
+        }
+
+        .client-nav-item {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .client-nav-item:hover {
+            background-color: rgba(255, 87, 34, 0.1);
+            color: #FF5722;
+        }
+
+        .client-nav-item.active {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            background-color: #f5f5f5;
+        }
+
+        .top-header {
+            background-color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .client-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #FF5722;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .dashboard-content {
+            padding: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            color: #333;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .payment-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .summary-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0.5rem 0;
+        }
+
+        .summary-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .payment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .payment-table th,
+        .payment-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .payment-table th {
+            color: #666;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .payment-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-paid {
+            background-color: #E8F5E9;
+            color: #4CAF50;
+        }
+
+        .status-pending {
+            background-color: #FFF3E0;
+            color: #FF9800;
+        }
+
+        .status-late {
+            background-color: #FFEBEE;
+            color: #F44336;
+        }
+
+        .action-button {
+            background-color: #FF5722;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-button:hover {
+            background-color: #F4511E;
+        }
+
+        .payment-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .client-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .payment-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="client-container">
+        <aside class="sidebar">
+            <a href="/" class="client-logo">
+                EscolaMove
+                <span>Área do Cliente</span>
+            </a>
+            <nav class="client-nav">
+                <a href="area_cliente.html" class="client-nav-item">📊 Início</a>
+                <a href="rotas-de-user.html" class="client-nav-item">🚌 Minha Rota</a>
+                <a href="pagamentos-de-user.html" class="client-nav-item active">💰 Pagamentos</a>
+                <a href="calendario-de-user.html" class="client-nav-item">📅 Calendário</a>
+                <a href="comunicado-de-user.html" class="client-nav-item">📝 Comunicados</a>
+                <a href="configurações-de-user.html" class="client-nav-item">⚙️ Configurações</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <h2>Gerenciamento de Pagamentos</h2>
+                <div class="client-info">
+                    <div class="client-avatar">JS</div>
+                    <div>
+                        <div class="client-name">João Silva</div>
+                        <div class="client-role">Aluno</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <div class="payment-summary">
+                    <div class="summary-card">
+                        <div class="summary-label">Próximo Pagamento</div>
+                        <div class="summary-value">R$ 350,00</div>
+                        <div class="summary-label">Vencimento: 15/12/2024</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Total Pago (2024)</div>
+                        <div class="summary-value">R$ 3.850,00</div>
+                        <div class="summary-label">11 pagamentos realizados</div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-label">Status da Mensalidade</div>
+                        <div class="summary-value" style="font-size: 1.2rem;">
+                            <span class="payment-status status-pending">Pendente</span>
+                        </div>
+                        <div class="summary-label">Dezembro/2024</div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="card-header">
+                        <span>Histórico de Pagamentos</span>
+                        <a href="pagamento.html" class="action-button">Realizar Pagamento</a>
+                    </div>
+                    <div class="payment-filters">
+                        <select class="filter-select">
+                            <option>Todos os Anos</option>
+                            <option>2024</option>
+                            <option>2023</option>
+                        </select>
+                        <select class="filter-select">
+                            <option>Todos os Status</option>
+                            <option>Pago</option>
+                            <option>Pendente</option>
+                            <option>Atrasado</option>
+                        </select>
+                    </div>
+                    <table class="payment-table">
+                        <thead>
+                            <tr>
+                                <th>Referência</th>
+                                <th>Vencimento</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>Data Pagamento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Dezembro/2024</td>
+                                <td>15/12/2024</td>
+                                <td>R$ 350,00</td>
+                                <td><span class="payment-status status-pending">Pendente</span></td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Novembro/2024</td>
+                                <td>15/11/2024</td>
+                                <td>R$ 350,00</td>
+                                <td><span class="payment-status status-paid">Pago</span></td>
+                                <td>14/11/2024</td>
+                            </tr>
+                            <tr>
+                                <td>Outubro/2024</td>
+                                <td>15/10/2024</td>
+                                <td>R$ 350,00</td>
+                                <td><span class="payment-status status-paid">Pago</span></td>
+                                <td>15/10/2024</td>
+                            </tr>
+                            <tr>
+                                <td>Setembro/2024</td>
+                                <td>15/09/2024</td>
+                                <td>R$ 350,00</td>
+                                <td><span class="payment-status status-late">Atrasado</span></td>
+                                <td>20/09/2024</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

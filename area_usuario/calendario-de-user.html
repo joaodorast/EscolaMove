@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EscolaMove - Calendário</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .client-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .client-logo {
+            color: #FF5722;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .client-logo span {
+            color: white;
+            font-weight: 300;
+            font-size: 0.8rem;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .client-nav {
+            list-style: none;
+        }
+
+        .client-nav-item {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .client-nav-item:hover {
+            background-color: rgba(255, 87, 34, 0.1);
+            color: #FF5722;
+        }
+
+        .client-nav-item.active {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            background-color: #f5f5f5;
+        }
+
+        .top-header {
+            background-color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .client-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #FF5722;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .client-name {
+            font-weight: 500;
+        }
+
+        .client-role {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .calendar-container {
+            padding: 2rem;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .calendar-nav button {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-nav button:hover {
+            background-color: #f5f5f5;
+        }
+
+        .current-month {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .calendar-grid {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #eee;
+        }
+
+        .weekday {
+            padding: 1rem;
+            text-align: center;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+        }
+
+        .calendar-day {
+            border-right: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            min-height: 120px;
+            padding: 0.5rem;
+        }
+
+        .calendar-day:nth-child(7n) {
+            border-right: none;
+        }
+
+        .day-number {
+            font-size: 0.9rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .event {
+            background-color: #FFF3E0;
+            color: #FF5722;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 0.3rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .event:hover {
+            background-color: #FFE0B2;
+        }
+
+        .event.holiday {
+            background-color: #E8F5E9;
+            color: #4CAF50;
+        }
+
+        .event.special {
+            background-color: #E3F2FD;
+            color: #2196F3;
+        }
+
+        .today {
+            background-color: #FFF3E0;
+        }
+
+        .other-month {
+            color: #ccc;
+            background-color: #fafafa;
+        }
+
+        @media (max-width: 768px) {
+            .client-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .calendar-container {
+                padding: 1rem;
+            }
+
+            .calendar-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            .calendar-nav {
+                justify-content: center;
+            }
+
+            .calendar-weekdays, .calendar-days {
+                font-size: 0.8rem;
+            }
+
+            .calendar-day {
+                min-height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="client-container">
+        <aside class="sidebar">
+            <a href="/" class="client-logo">
+                EscolaMove
+                <span>Área do Cliente</span>
+            </a>
+            <nav class="client-nav">
+                <a href="area_cliente.html" class="client-nav-item">📊 Início</a>
+                <a href="rotas-de-user.html" class="client-nav-item">🚌 Minha Rota</a>
+                <a href="pagamentos-de-user.html" class="client-nav-item">💰 Pagamentos</a>
+                <a href="calendario-de-user.html" class="client-nav-item active">📅 Calendário</a>
+                <a href="comunicado-de-user.html" class="client-nav-item">📝 Comunicados</a>
+                <a href="configurações-de-user.html" class="client-nav-item">⚙️ Configurações</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <h2>Calendário Escolar</h2>
+                <div class="client-info">
+                    <div class="client-avatar">JS</div>
+                    <div>
+                        <div class="client-name">João Silva</div>
+                        <div class="client-role">Aluno</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <div class="calendar-nav">
+                        <button>◀ Mês Anterior</button>
+                        <h2 class="current-month">Dezembro 2024</h2>
+                        <button>Próximo Mês ▶</button>
+                    </div>
+                </div>
+
+                <div class="calendar-grid">
+                    <div class="calendar-weekdays">
+                        <div class="weekday">Domingo</div>
+                        <div class="weekday">Segunda</div>
+                        <div class="weekday">Terça</div>
+                        <div class="weekday">Quarta</div>
+                        <div class="weekday">Quinta</div>
+                        <div class="weekday">Sexta</div>
+                        <div class="weekday">Sábado</div>
+                    </div>
+
+                    <div class="calendar-days">
+                        <div class="calendar-day other-month">
+                            <div class="day-number">25</div>
+                        </div>
+                        <div class="calendar-day other-month">
+                            <div class="day-number">26</div>
+                        </div>
+                        <div class="calendar-day other-month">
+                            <div class="day-number">27</div>
+                        </div>
+                        <div class="calendar-day other-month">
+                            <div class="day-number">28</div>
+                        </div>
+                        <div class="calendar-day other-month">
+                            <div class="day-number">29</div>
+                        </div>
+                        <div class="calendar-day other-month">
+                            <div class="day-number">30</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">1</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">2</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">3</div>
+                            <div class="event">Prova Trimestral</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">4</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">5</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">6</div>
+                            <div class="event special">Feira de Ciências</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">7</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">8</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">9</div>
+                        </div>
+                        <div class="calendar-day today">
+                            <div class="day-number">10</div>
+                            <div class="event">Entrega de Trabalho</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">11</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">12</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">13</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">14</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">15</div>
+                            <div class="event">Vencimento Mensalidade</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">16</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">17</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">18</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">19</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">20</div>
+                            <div class="event holiday">Início do Recesso</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">21</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">22</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">23</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">24</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">25</div>
+                            <div class="event holiday">Natal</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">26</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">27</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">28</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">29</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">30</div>
+                        </div>
+                        <div class="calendar-day">
+                            <div class="day-number">31</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

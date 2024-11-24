@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onde Estamos - EscolaMove</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .top-bar {
+            background-color: #FF5722;
+            padding: 0.5rem 2rem;
+            text-align: right;
+        }
+
+        .login-buttons {
+            display: inline-flex;
+            gap: 1rem;
+        }
+
+        .login-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.3rem 1rem;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-login {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-login {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            color: #FF5722;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #333;
+            font-weight: 300;
+            font-size: 1rem;
+            display: block;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #FF5722;
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .location-hero {
+            background-color: #f5f5f5;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .location-hero h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .location-hero p {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .location-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .map-container {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .map-frame {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 8px;
+        }
+
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .location-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .location-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .location-info {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .location-info p {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: start;
+            gap: 0.5rem;
+        }
+
+        .contact-section {
+            background: #f9f9f9;
+            padding: 4rem 2rem;
+            margin-top: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-card {
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-card i {
+            font-size: 2.5rem;
+            color: #FF5722;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .contact-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .contact-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #FF5722;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-top: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background: #f4511e;
+        }
+
+        .chatbot-widget {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .chatbot-header {
+            background: #FF5722;
+            color: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chatbot-header img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        .chatbot-header .title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .chatbot-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 5px 0;
+        }
+
+        .bot-message {
+            background: #f0f0f0;
+            align-self: flex-start;
+        }
+
+        .user-message {
+            background: #FF5722;
+            color: white;
+            align-self: flex-end;
+        }
+
+        .chatbot-input {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chatbot-input button {
+            background: #FF5722;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #FF5722;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
+            border: none;
+            z-index: 1000;
+        }
+
+        .close-button {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 5px;
+            margin-left: auto;
+        }
+
+        .end-conversation-button {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-btn {
+                display: block;
+            }
+
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .map-frame {
+                height: 300px;
+            }
+
+            .location-hero h1 {
+                font-size: 2rem;
+            }
+
+            .location-hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="login-buttons">
+            <a href="area_usuario/area_cliente.html" class="login-btn user-login">
+                <i>👤</i> Área do Cliente
+            </a>
+            <a href="area_adm.html" class="login-btn admin-login">
+                <i>🔒</i> Área Administrativa
+            </a>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="logo-container">
+            <a href="/" class="logo">
+                EscolaMove
+                <span>Transporte & Tecnologia</span>
+            </a>
+        </div>
+        
+        <button class="menu-btn">☰</button>
+
+        <nav class="nav">
+            <a href="home.html" class="nav-item">Home</a>
+            <a href="quem-somos.html" class="nav-item">Quem Somos</a>
+            <a href="noticias.html" class="nav-item">Notícias</a>
+            <a href="quanto-custa.html" class="nav-item">Quanto Custa</a>
+            <a href="onde-estamos.html" class="nav-item">Onde Estamos</a>
+            <a href="como-fazemos.html" class="nav-item">Como Fazemos</a>
+            <a href="cases.html" class="nav-item">Cases de Sucesso</a>
+            <a href="links.html" class="nav-item">Links</a>
+        </nav>
+    </header>
+
+    <div class="location-hero">
+        <h1>Onde Estamos</h1>
+        <p>Conheça nossas unidades e áreas de atendimento em todo o Brasil</p>
+    </div>
+
+    <main class="location-content">
+        <div class="map-container">
+            <iframe class="map-frame" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3678.8992233986233!2d-43.26665648497317!3d-22.69036568011048!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9973bf077eb333%3A0x16f7b9341126df8b!2sJardim%20Primavera%2C%20Duque%20de%20Caxias%20-%20RJ!5e0!3m2!1sen!2sbr!4v1707205002718!5m2!1sen!2sbr" 
+                    allowfullscreen="" loading="lazy">
+            </iframe>
+        </div>
+
+        <div class="locations-grid">
+            <div class="location-card">
+                <h3>São Paulo - SP (Matriz)</h3>
+                <div class="location-info">
+                    <p><i>📍</i> Av. Paulista, 1000 - Bela Vista</p>
+                    <p><i>📱</i> (11) 3333-4444</p>
+                    <p><i>✉️</i> sp@escolamove.com.br</p>
+                    <p><i>🕒</i> Segunda a Sexta: 8h às 18h</p>
+                </div>
+            </div>
+
+            <div class="location-card">
+                <h3>Rio de Janeiro - RJ</h3>
+                <div class="location-info">
+                    <p><i>📍</i> Rua Jardim Primavera, 500 - Duque de Caxias</p>
+                    <p><i>📱</i> (21) 3333-4444</p>
+                    <p><i>✉️</i> rj@escolamove.com.br</p>
+                    <p><i>🕒</i> Segunda a Sexta: 8h às 18h</p>
+                </div>
+            </div>
+
+            <div class="location-card">
+                <h3>Belo Horizonte - MG</h3>
+                <div class="location-info">
+                    <p><i>📍</i> Av. Afonso Pena, 2000 - Centro</p>
+                    <p><i>📱</i> (31) 3333-4444</p>
+                    <p><i>✉️</i> bh@escolamove.com.br</p>
+                    <p><i>🕒</i> Segunda a Sexta: 8h às 18h</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <i>📞</i>
+                    <h3>Central de Atendimento</h3>    
+                    <p>Atendimento 24 horas para emergências e suporte</p>
+                    <p style="font-weight: bold; color: #333;">0800 123 4567</p>
+                </div>
+                <div class="contact-card">
+                    <i>💬</i>
+                    <h3>WhatsApp</h3>
+                    <p>Atendimento rápido e personalizado</p>
+                    <a href="#" class="contact-button">Iniciar Conversa</a>
+                </div>
+                <div class="contact-card">
+                    <i>✉️</i>
+                    <h3>E-mail</h3>
+                    <p>Para dúvidas e informações</p>
+                    <p style="font-weight: bold; color: #333;">contato@escolamove.com.br</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="chatbot-widget" id="chatbot">
+        <div class="chatbot-header">
+            <img src="/api/placeholder/30/30" alt="Escola Move Logo">
+            <div class="title">Escola em Movimento</div>
+            <button class="close-button" onclick="toggleChat()">×</button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="message bot-message">Olá, como podemos te ajudar hoje?</div>
+            <div class="message bot-message">Por favor, selecione uma opção:</div>
+            <div class="message bot-message" style="cursor: pointer" onclick="selectQuoteOption()">
+                Quero um orçamento para minha escola particular
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" placeholder="Digite sua mensagem..." id="messageInput">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+        <button class="end-conversation-button" onclick="endConversation()">Encerrar Conversa</button>
+    </div>
+    <button class="chatbot-toggle" onclick="toggleChat()">💬</button>
+
+    <script>
+        const menuBtn = document.querySelector('.menu-btn');
+        const nav = document.querySelector('.nav');
+
+        menuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        function toggleChat() {
+            const chatbot = document.getElementById('chatbot');
+            chatbot.style.display = chatbot.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+
+            if (message) {
+                addMessage(message, 'user');
+                input.value = '';
+
+                setTimeout(() => {
+                    respondToMessage(message);
+                }, 1000);
+            }
+        }
+
+        function addMessage(text, sender) {
+            const messages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.textContent = text;
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function respondToMessage(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('@')) {
+                addMessage('Obrigado! Em breve nossa equipe entrará em contato através do e-mail fornecido.', 'bot');
+            } else if (lowerMessage.includes('horário')) {
+                addMessage('Estamos disponíveis de Segunda a Sexta, das 8h às 18h.', 'bot');
+            } else if (lowerMessage.includes('localização')) {
+                addMessage('Nossas unidades estão em SP, RJ e BH. Qual unidade você gostaria de mais informações?', 'bot');
+            } else if (lowerMessage.includes('serviços')) {
+                addMessage('Oferecemos transporte escolar e tecnologia para sua instituição. Quer saber mais sobre algum serviço específico?', 'bot');
+            } else if (lowerMessage.includes('atendente')) {
+                addMessage('Transferindo você para um atendente humano. Um momento, por favor...', 'bot');
+                setTimeout(() => {
+                    addMessage('Um atendente humano estará com você em breve.', 'bot');
+                }, 2000);
+            } else {
+                addMessage('Como posso ajudar mais?', 'bot');
+            }
+        }
+
+        function selectQuoteOption() {
+            addMessage('Quero um orçamento para minha escola particular', 'user');
+            setTimeout(() => {
+                addMessage('Temos uma equipe pronta para te atender e, para isso, precisamos de algumas informações. Qual é o seu e-mail?', 'bot');
+            }, 1000);
+        }
+
+        function endConversation() {
+            const messages = document.getElementById('chatMessages');
+            messages.innerHTML = '';
+            addMessage('A conversa foi encerrada. Se precisar, basta iniciar novamente!', 'bot');
+            setTimeout(() => {
+                toggleChat();
+            }, 2000);                                                        
+        }
+
+        document.getElementById('messageInput').addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('chatbot').style.display = 'none';
+        });
+    </script>
+</body>
+</html>

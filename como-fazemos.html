@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Como Fazemos - EscolaMove</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .top-bar {
+            background-color: #FF5722;
+            padding: 0.5rem 2rem;
+            text-align: right;
+        }
+
+        .login-buttons {
+            display: inline-flex;
+            gap: 1rem;
+        }
+
+        .login-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.3rem 1rem;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-login {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-login {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            color: #FF5722;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #333;
+            font-weight: 300;
+            font-size: 1rem;
+            display: block;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #FF5722;
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .process-hero {
+            background-color: #f5f5f5;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .process-hero h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .process-hero p {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .process-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .step-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .step-card i {
+            font-size: 2.5rem;
+            color: #FF5722;
+            margin-bottom: 1rem;
+        }
+
+        .step-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .step-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .technology-section {
+            background: #f9f9f9;
+            padding: 4rem 2rem;
+            margin: 4rem 0;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tech-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .tech-card i {
+            font-size: 2.5rem;
+            color: #FF5722;
+            margin-bottom: 1rem;
+        }
+
+        .tech-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .tech-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .quality-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .quality-section h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .quality-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .quality-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .quality-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quality-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .menu-btn {
+                display: block;
+            }
+
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .process-hero h1 {
+                font-size: 2rem;
+            }
+
+            .process-hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="login-buttons">
+            <a href="login-cliente.html" class="login-btn user-login">
+                <i>👤</i> Área do Cliente
+            </a>
+            <a href="login-cliente.html" class="login-btn admin-login">
+                <i>🔒</i> Área Administrativa
+            </a>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="logo-container">
+            <a href="/" class="logo">
+                EscolaMove
+                <span>Transporte & Tecnologia</span>
+            </a>
+        </div>
+        
+        <button class="menu-btn">☰</button>
+
+        <nav class="nav">
+            <a href="home.html" class="nav-item">Home</a>
+            <a href="quem-somos.html" class="nav-item">Quem Somos</a>
+            <a href="noticias.html" class="nav-item">Notícias</a>
+            <a href="quanto-custa.html" class="nav-item">Quanto Custa</a>
+            <a href="onde-estamos.html" class="nav-item">Onde Estamos</a>
+            <a href="como-fazemos.html" class="nav-item">Como Fazemos</a>
+            <a href="cases.html" class="nav-item">Cases de Sucesso</a>
+            <a href="links.html" class="nav-item">Links</a>
+        </nav>
+    </header>
+
+    <div class="process-hero">
+        <h1>Como Fazemos</h1>
+        <p>Conheça nossa metodologia e processo de trabalho que garantem a excelência no transporte escolar</p>
+    </div>
+
+    <main class="process-content">
+        <div class="process-steps">
+            <div class="step-card">
+                <i>📋</i>
+                <h3>Planejamento</h3>
+                <p>Análise detalhada das necessidades de cada escola e aluno, criando rotas otimizadas e horários personalizados para garantir a melhor experiência.</p>
+            </div>
+
+            <div class="step-card">
+                <i>🚌</i>
+                <h3>Execução</h3>
+                <p>Transporte realizado por profissionais treinados, com veículos modernos e equipados com tecnologia de ponta para monitoramento em tempo real.</p>
+            </div>
+
+            <div class="step-card">
+                <i>📱</i>
+                <h3>Monitoramento</h3>
+                <p>Acompanhamento em tempo real através de nosso aplicativo, permitindo que pais e escolas saibam exatamente onde está cada veículo.</p>
+            </div>
+        </div>
+
+        <div class="technology-section">
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <i>📍</i>
+                    <h3>Rastreamento GPS</h3>
+                    <p>Sistema de rastreamento em tempo real com precisão e confiabilidade para todas as rotas.</p>
+                </div>
+
+                <div class="tech-card">
+                    <i>💻</i>
+                    <h3>Software de Gestão</h3>
+                    <p>Plataforma própria para gerenciamento de rotas, horários e comunicação com responsáveis.</p>
+                </div>
+
+                <div class="tech-card">
+                    <i>🔔</i>
+                    <h3>Notificações</h3>
+                    <p>Sistema de alertas automáticos sobre chegadas, partidas e qualquer ocorrência durante o trajeto.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="quality-section">
+            <h2>Nossos Diferenciais</h2>
+            <div class="quality-grid">
+                <div class="quality-card">
+                    <h3><i>👥</i> Equipe Qualificada</h3>
+                    <p>Motoristas e monitores com treinamento especializado em transporte escolar e primeiros socorros.</p>
+                </div>
+
+                <div class="quality-card">
+                    <h3><i>🛡️</i> Segurança</h3>
+                    <p>Veículos com revisão constante, equipamentos de segurança e monitoramento 24 horas.</p>
+                </div>
+
+                <div class="quality-card">
+                    <h3><i>⭐</i> Qualidade</h3>
+                    <p>Compromisso com pontualidade, conforto e atendimento personalizado para cada família.</p>
+                </div>
+
+                <div class="quality-card">
+                    <h3><i>🤝</i> Parceria</h3>
+                    <p>Estreita relação com escolas e famílias para oferecer o melhor serviço possível.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const menuBtn = document.querySelector('.menu-btn');
+        const nav = document.querySelector('.nav');
+        
+        menuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

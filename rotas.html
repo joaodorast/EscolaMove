@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .admin-logo {
+            color: #FF5722;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .admin-logo span {
+            color: white;
+            font-weight: 300;
+            font-size: 0.8rem;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .admin-nav {
+            list-style: none;
+        }
+
+        .admin-nav-item {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .admin-nav-item:hover {
+            background-color: rgba(255, 87, 34, 0.1);
+            color: #FF5722;
+        }
+
+        .admin-nav-item.active {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            background-color: #f5f5f5;
+        }
+
+        .top-header {
+            background-color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #FF5722;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .routes-content {
+            padding: 2rem;
+        }
+
+        .routes-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .add-route-btn {
+            background-color: #FF5722;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .routes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .route-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+        }
+
+        .route-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .route-title {
+            font-size: 1.2rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .route-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background-color: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .status-inactive {
+            background-color: #FFEBEE;
+            color: #C62828;
+        }
+
+        .route-info {
+            margin-bottom: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        .route-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: none;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background-color: #f5f5f5;
+            color: #FF5722;
+            border-color: #FF5722;
+        }
+
+        .route-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .routes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .route-filters {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <a href="/" class="admin-logo">
+                EscolaMove
+                <span>Painel Administrativo</span>
+            </a>
+            <nav class="admin-nav">
+                <a href="area_adm.html" class="admin-nav-item active">📊 Dashboard</a>
+                <a href="alunos.html" class="admin-nav-item">👥 Alunos</a>
+                <a href="rotas.html" class="admin-nav-item">🚌 Rotas</a>
+                <a href="motoristas.html" class="admin-nav-item">🚘 Motoristas</a>
+                <a href="escolas.html" class="admin-nav-item">🏫 Escolas</a>
+                <a href="pagamentos.html" class="admin-nav-item">💰 Pagamentos</a>
+                <a href="relatorios.html" class="admin-nav-item">📝 Relatórios</a>
+                <a href="configuraçoes.html" class="admin-nav-item">⚙️ Configurações</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <h2>Gerenciamento de Rotas</h2>
+                <div class="admin-info">
+                    <div class="admin-avatar">A</div>
+                    <div>
+                        <div class="admin-name">Admin</div>
+                        <div class="admin-role">Administrador</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="routes-content">
+                <div class="routes-header">
+                    <div class="route-filters">
+                        <select class="filter-select">
+                            <option value="">Todas as Escolas</option>
+                            <option value="escola1">Escola Municipal 1</option>
+                            <option value="escola2">Escola Estadual 2</option>
+                        </select>
+                        <select class="filter-select">
+                            <option value="">Todos os Motoristas</option>
+                            <option value="motorista1">João Silva</option>
+                            <option value="motorista2">Maria Santos</option>
+                        </select>
+                        <select class="filter-select">
+                            <option value="">Todos os Status</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
+                    <button class="add-route-btn">➕ Nova Rota</button>
+                </div>
+
+                <div class="routes-grid">
+                    <div class="route-card">
+                        <div class="route-header">
+                            <h3 class="route-title">Rota #001</h3>
+                            <span class="route-status status-active">Ativa</span>
+                        </div>
+                        <div class="route-info">
+                            <div class="info-item">🏫 Colégio Seice</div>
+                            <div class="info-item">🚘 Motorista: João Silva</div>
+                            <div class="info-item">👥 Alunos: 15</div>
+                            <div class="info-item">⏰ Horário: 06:30 - 07:30</div>
+                        </div>
+                        <div class="route-actions">
+                            <button class="action-btn">✏️ Editar</button>
+                            <button class="action-btn">👁️ Visualizar</button>
+                            <button class="action-btn">🗑️ Excluir</button>
+                        </div>
+                    </div>
+
+                    <div class="route-card">
+                        <div class="route-header">
+                            <h3 class="route-title">Rota #002</h3>
+                            <span class="route-status status-active">Ativa</span>
+                        </div>
+                        <div class="route-info">
+                            <div class="info-item">🏫 Colégio Seice</div>
+                            <div class="info-item">🚘 Motorista: Maria Santos</div>
+                            <div class="info-item">👥 Alunos: 12</div>
+                            <div class="info-item">⏰ Horário: 07:00 - 08:00</div>
+                        </div>
+                        <div class="route-actions">
+                            <button class="action-btn">✏️ Editar</button>
+                            <button class="action-btn">👁️ Visualizar</button>
+                            <button class="action-btn">🗑️ Excluir</button>
+                        </div>
+                    </div>
+
+                    <div class="route-card">
+                        <div class="route-header">
+                            <h3 class="route-title">Rota #003</h3>
+                            <span class="route-status status-inactive">Inativa</span>
+                        </div>
+                        <div class="route-info">
+                            <div class="info-item">🏫 Colégio Seice</div>
+                            <div class="info-item">🚘 Motorista: Pedro Oliveira</div>
+                            <div class="info-item">👥 Alunos: 8</div>
+                            <div class="info-item">⏰ Horário: 12:30 - 13:30</div>
+                        </div>
+                        <div class="route-actions">
+                            <button class="action-btn">✏️ Editar</button>
+                            <button class="action-btn">👁️ Visualizar</button>
+                            <button class="action-btn">🗑️ Excluir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

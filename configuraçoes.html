@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .admin-logo {
+            color: #FF5722;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .admin-logo span {
+            color: white;
+            font-weight: 300;
+            font-size: 0.8rem;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .admin-nav {
+            list-style: none;
+        }
+
+        .admin-nav-item {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .admin-nav-item:hover {
+            background-color: rgba(255, 87, 34, 0.1);
+            color: #FF5722;
+        }
+
+        .admin-nav-item.active {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            background-color: #f5f5f5;
+        }
+
+        .top-header {
+            background-color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #FF5722;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .config-content {
+            padding: 2rem;
+        }
+
+        .config-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .config-section h3 {
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f5f5f5;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #FF5722;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #FF5722;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .toggle-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+
+        .toggle-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #f4511e;
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <a href="/" class="admin-logo">
+                EscolaMove
+                <span>Painel Administrativo</span>
+            </a>
+            <nav class="admin-nav">
+                <a href="area_adm.html" class="admin-nav-item">📊 Dashboard</a>
+                <a href="alunos.html" class="admin-nav-item">👥 Alunos</a>
+                <a href="rotas.html" class="admin-nav-item">🚌 Rotas</a>
+                <a href="motoristas.html" class="admin-nav-item">🚘 Motoristas</a>
+                <a href="escolas.html" class="admin-nav-item">🏫 Escolas</a>
+                <a href="pagamentos.html" class="admin-nav-item">💰 Pagamentos</a>
+                <a href="relatorios.html" class="admin-nav-item">📝 Relatórios</a>
+                <a href="configuracoes.html" class="admin-nav-item active">⚙️ Configurações</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <form id="configurationForm">
+                <header class="top-header">
+                    <h2>Configurações</h2>
+                    <div class="admin-info">
+                        <div class="admin-avatar">A</div>
+                        <div>
+                            <div class="admin-name">Admin</div>
+                            <div class="admin-role">Administrador</div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="config-content">
+                    <div class="config-section">
+                        <h3>Configurações Gerais</h3>
+                        <div class="form-group">
+                            <label>Nome da Empresa</label>
+                            <input type="text" class="form-control" name="companyName" value="EscolaMove" />
+                        </div>
+                        <div class="form-group">
+                            <label>Email de Contato</label>
+                            <input type="email" class="form-control" name="contactEmail" value="contato@escolamove.com.br" />
+                        </div>
+                        <div class="form-group">
+                            <label>Telefone</label>
+                            <input type="tel" class="form-control" name="contactPhone" value="(11) 9999-9999" />
+                        </div>
+                    </div>
+
+                    <div class="config-section">
+                        <h3>Notificações</h3>
+                        <div class="toggle-group">
+                            <span class="toggle-label">Notificações por Email</span>
+                            <label class="switch">
+                                <input type="checkbox" checked name="emailNotifications">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-group">
+                            <span class="toggle-label">Notificações por SMS</span>
+                            <label class="switch">
+                                <input type="checkbox" name="smsNotifications">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-group">
+                            <span class="toggle-label">Alertas de Pagamento</span>
+                            <label class="switch">
+                                <input type="checkbox" checked name="paymentAlerts">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="config-section">
+                        <h3>Segurança</h3>
+                        <div class="form-group">
+                            <label>Senha Atual</label>
+                            <input type="password" class="form-control" name="currentPassword" />
+                        </div>
+                        <div class="form-group">
+                            <label>Nova Senha</label>
+                            <input type="password" class="form-control" name="newPassword" />
+                        </div>
+                        <div class="form-group">
+                            <label>Confirmar Nova Senha</label>
+                            <input type="password" class="form-control" name="confirmPassword" />
+                        </div>
+                        <div class="toggle-group">
+                            <span class="toggle-label">Autenticação em Duas Etapas</span>
+                            <label class="switch">
+                                <input type="checkbox" checked name="twoFactorAuth">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="config-section">
+                        <h3>Backup e Dados</h3>
+                        <div class="toggle-group">
+                            <span class="toggle-label">Backup Automático</span>
+                            <label class="switch">
+                                <input type="checkbox" checked name="autoBackup">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Frequência de Backup</label>
+                            <select class="form-control" name="backupFrequency">
+                                <option>Diário</option>
+                                <option>Semanal</option>
+                                <option>Mensal</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary">Salvar Alterações</button>
+                </div>
+            </form>
+        </main>
+    </div>
+</body>
+<script>
+    const showNotification = (message, type = 'success') => {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background-color: ${type === 'success' ? '#4CAF50' : '#f44336'};
+            color: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    };
+
+    class ConfigurationManager {
+        constructor() {
+            this.initialData = {};
+            this.setupEventListeners();
+            this.loadInitialData();
+        }
+
+        loadInitialData() {
+            const formInputs = document.querySelectorAll('.form-control');
+            formInputs.forEach(input => {
+                this.initialData[input.name] = input.value;
+            });
+
+            const toggles = document.querySelectorAll('.switch input[type="checkbox"]');
+            toggles.forEach(toggle => {
+                this.initialData[toggle.name] = toggle.checked;
+            });
+        }
+
+        setupEventListeners() {
+            const saveButton = document.querySelector('.btn-primary');
+            if (saveButton) {
+                saveButton.addEventListener('click', this.handleSave.bind(this));
+            }
+
+            const newPasswordInput = document.querySelector('input[name="newPassword"]');
+            const confirmPasswordInput = document.querySelector('input[name="confirmPassword"]');
+            if (newPasswordInput && confirmPasswordInput) {
+                confirmPasswordInput.addEventListener('input', () => {
+                    this.validatePasswords(newPasswordInput.value, confirmPasswordInput.value);
+                });
+            }
+
+            const toggles = document.querySelectorAll('.switch input[type="checkbox"]');
+            toggles.forEach(toggle => {
+                toggle.addEventListener('change', (e) => {
+                    this.handleToggle(e.target);
+                });
+            });
+        }
+
+        validatePasswords(newPassword, confirmPassword) {
+            const confirmInput = document.querySelector('input[name="confirmPassword"]');
+            if (newPassword !== confirmPassword) {
+                confirmInput.setCustomValidity('As senhas não coincidem');
+                return false;
+            } else {
+                confirmInput.setCustomValidity('');
+                return true;
+            }
+        }
+
+        handleToggle(toggleElement) {
+            const featureName = toggleElement.name;
+            const isEnabled = toggleElement.checked;
+            
+            switch(featureName) {
+                case 'twoFactorAuth':
+                    if (isEnabled) {
+                        this.setupTwoFactorAuth();
+                    }
+                    break;
+                case 'autoBackup':
+                    const frequency = document.querySelector('select[name="backupFrequency"]');
+                    frequency.disabled = !isEnabled;
+                    break;
+            }
+        }
+
+        setupTwoFactorAuth() {
+            showNotification('Configure a autenticação em duas etapas no seu aplicativo', 'info');
+        }
+
+        async handleSave() {
+            try {
+                const formData = new FormData(document.querySelector('#configurationForm'));
+                const data = Object.fromEntries(formData);
+
+                if (!this.validateRequiredFields()) {
+                    showNotification('Por favor, preencha todos os campos obrigatórios', 'error');
+                    return;
+                }
+
+                if (data.newPassword) {
+                    if (!this.validatePasswords(data.newPassword, data.confirmPassword)) {
+                        showNotification('As senhas não coincidem', 'error');
+                        return;
+                    }
+                }
+
+                await this.saveConfiguration(data);
+                showNotification('Configurações salvas com sucesso!');
+                this.loadInitialData();
+            } catch (error) {
+                showNotification('Erro ao salvar as configurações', 'error');
+                console.error('Error saving configuration:', error);
+            }
+        }
+
+        validateRequiredFields() {
+            const requiredInputs = document.querySelectorAll('[required]');
+            return Array.from(requiredInputs).every(input => input.value.trim() !== '');
+        }
+
+        async saveConfiguration(data) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    console.log('Configuration saved:', data);
+                    resolve({ success: true });
+                }, 1000);
+            });
+        }
+    }
+
+    class NavigationManager {
+        constructor() {
+            this.setupNavigationListeners();
+            this.handleMobileNavigation();
+        }
+
+        setupNavigationListeners() {
+            const navItems = document.querySelectorAll('.admin-nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', (e) => {
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    e.target.classList.add('active');
+                });
+            });
+        }
+
+        handleMobileNavigation() {
+            const mediaQuery = window.matchMedia('(max-width: 768px)');
+            const sidebar = document.querySelector('.sidebar');
+            
+            if (mediaQuery.matches) {
+                const toggleButton = document.createElement('button');
+                toggleButton.className = 'mobile-nav-toggle';
+                toggleButton.innerHTML = '☰';
+                toggleButton.style.cssText = `
+                    position: fixed;
+                    top: 10px;
+                    left: 10px;
+                    z-index: 1001;
+                    background: #FF5722;
+                    border: none;
+                    color: white;
+                    padding: 10px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                `;
+                document.body.appendChild(toggleButton);
+                
+                toggleButton.addEventListener('click', () => {
+                    sidebar.classList.toggle('active');
+                });
+            }
+        }
+    }
+
+    class FormValidator {
+        static setupValidation() {
+            const emailInput = document.querySelector('input[type="email"]');
+            const phoneInput = document.querySelector('input[type="tel"]');
+            
+            if (emailInput) {
+                emailInput.addEventListener('input', (e) => {
+                    this.validateEmail(e.target);
+                });
+            }
+            
+            if (phoneInput) {
+                phoneInput.addEventListener('input', (e) => {
+                    this.formatPhoneNumber(e.target);
+                });
+            }
+        }
+
+        static validateEmail(input) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(input.value)) {
+                input.setCustomValidity('Por favor, insira um email válido');
+            } else {
+                input.setCustomValidity('');
+            }
+        }
+
+        static formatPhoneNumber(input) {
+            let value = input.value.replace(/\D/g, '');
+            value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+            value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+            input.value = value;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        new ConfigurationManager();
+        new NavigationManager();
+        FormValidator.setupValidation();
+    });
+</script>
+</html>

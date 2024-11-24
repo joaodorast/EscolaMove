@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EscolaMove - Relatórios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .admin-logo {
+            color: #FF5722;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .admin-logo span {
+            color: white;
+            font-weight: 300;
+            font-size: 0.8rem;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .admin-nav {
+            list-style: none;
+        }
+
+        .admin-nav-item {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .admin-nav-item:hover {
+            background-color: rgba(255, 87, 34, 0.1);
+            color: #FF5722;
+        }
+
+        .admin-nav-item.active {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            background-color: #f5f5f5;
+        }
+
+        .top-header {
+            background-color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #FF5722;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .admin-name {
+            font-weight: 500;
+        }
+
+        .admin-role {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .reports-content {
+            padding: 2rem;
+        }
+
+        .reports-header {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .reports-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .report-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .report-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .report-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .report-title {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .report-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .report-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <a href="/" class="admin-logo">
+                EscolaMove
+                <span>Painel Administrativo</span>
+            </a>
+            <nav class="admin-nav">
+                <a href="area_adm.html" class="admin-nav-item">📊 Dashboard</a>
+                <a href="alunos.html" class="admin-nav-item">👥 Alunos</a>
+                <a href="rotas.html" class="admin-nav-item">🚌 Rotas</a>
+                <a href="motoristas.html" class="admin-nav-item">🚘 Motoristas</a>
+                <a href="escolas.html" class="admin-nav-item">🏫 Escolas</a>
+                <a href="pagamentos.html" class="admin-nav-item">💰 Pagamentos</a>
+                <a href="relatorios.html" class="admin-nav-item active">📝 Relatórios</a>
+                <a href="configuraçoes.html" class="admin-nav-item">⚙️ Configurações</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <h2>Relatórios</h2>
+                <div class="admin-info">
+                    <div class="admin-avatar">A</div>
+                    <div>
+                        <div class="admin-name">Admin</div>
+                        <div class="admin-role">Administrador</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="reports-content">
+                <div class="reports-header">
+                    <h3>Filtros de Relatório</h3>
+                    <div class="reports-filters">
+                        <div class="filter-group">
+                            <label>Período</label>
+                            <select>
+                                <option>Último mês</option>
+                                <option>Últimos 3 meses</option>
+                                <option>Último ano</option>
+                                <option>Personalizado</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Tipo de Relatório</label>
+                            <select>
+                                <option>Todos</option>
+                                <option>Financeiro</option>
+                                <option>Operacional</option>
+                                <option>Desempenho</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Escola</label>
+                            <select>
+                                <option>Todas</option>
+                                <option>Escola Municipal</option>
+                                <option>Escola Estadual</option>
+                                <option>Escola Particular</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Rota</label>
+                            <select>
+                                <option>Todas</option>
+                                <option>Rota #1</option>
+                                <option>Rota #2</option>
+                                <option>Rota #3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">Gerar Relatório</button>
+                        <button class="btn btn-secondary">Limpar Filtros</button>
+                    </div>
+                </div>
+
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <div class="report-icon">📊</div>
+                        <h4 class="report-title">Relatório Financeiro</h4>
+                        <p class="report-description">Resumo completo de receitas, despesas e métricas financeiras.</p>
+                        <div class="report-meta">
+                            <span>Última atualização: Hoje</span>
+                            <span>PDF, Excel</span>
+                        </div>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="report-icon">🚌</div>
+                        <h4 class="report-title">Desempenho das Rotas</h4>
+                        <p class="report-description">Análise de eficiência, tempo e ocupação das rotas.</p>
+                        <div class="report-meta">
+                            <span>Última atualização: Ontem</span>
+                            <span>PDF, Excel</span>
+                        </div>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="report-icon">👥</div>
+                        <h4 class="report-title">Relatório de Alunos</h4>
+                        <p class="report-description">Distribuição de alunos por escola, rota e região.</p>
+                        <div class="report-meta">
+                            <span>Última atualização: 2 dias atrás</span>
+                            <span>PDF, Excel</span>
+                        </div>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="report-icon">💰</div>
+                        <h4 class="report-title">Status de Pagamentos</h4>
+                        <p class="report-description">Visão geral de pagamentos, inadimplência e previsões.</p>
+                        <div class="report-meta">
+                            <span>Última atualização: 3 dias atrás</span>
+                            <span>PDF, Excel</span>
+                        </div>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="report-icon">📈</div>
+                        <h4 class="report-title">Análise de Crescimento</h4>
+                        <p class="report-description">Tendências de crescimento e projeções futuras.</p>
+                        <div class="report-meta">
+                            <span>Última atualização: 1 semana atrás</span>
+                            <span>PDF, Excel</span>
+                        </div>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="report-icon">⚡</div>
+                        <h4 class="report-title">Relatório de Desempenho</h4>
+                        <p class="report-description">Métricas de eficiência operacional e KPIs.</p>
+                        <div class="report-meta">
+                            <span>Última atualização: 1 semana atrás</span>
+                            <span>PDF, Excel</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function gerarRelatorio() {
+            const periodo = document.querySelector('select:nth-of-type(1)').value;
+            const tipoRelatorio = document.querySelector('select:nth-of-type(2)').value;
+            const escola = document.querySelector('select:nth-of-type(3)').value;
+            const rota = document.querySelector('select:nth-of-type(4)').value;
+            alert(`Gerando relatório com os seguintes parâmetros:\nPeríodo: ${periodo}\nTipo de Relatório: ${tipoRelatorio}\nEscola: ${escola}\nRota: ${rota}`);
+        }
+
+        function limparFiltros() {
+            const selects = document.querySelectorAll('select');
+            selects.forEach(select => select.selectedIndex = 0);
+            alert("Filtros limpos!");
+        }
+
+        function salvarAlteracoes() {
+            alert("Alterações salvas!");
+        }
+
+        document.querySelector('.btn-primary').addEventListener('click', gerarRelatorio);
+        document.querySelector('.btn-secondary').addEventListener('click', limparFiltros);
+    </script>
+</body>
+</html>

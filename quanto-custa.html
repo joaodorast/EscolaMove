@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quanto Custa - EscolaMove</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .top-bar {
+            background-color: #FF5722;
+            padding: 0.5rem 2rem;
+            text-align: right;
+        }
+
+        .login-buttons {
+            display: inline-flex;
+            gap: 1rem;
+        }
+
+        .login-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.3rem 1rem;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-login {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-login {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            color: #FF5722;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #333;
+            font-weight: 300;
+            font-size: 1rem;
+            display: block;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #FF5722;
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+        }
+
+        
+        .pricing-hero {
+            background-color: #f5f5f5;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .pricing-hero h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-hero p {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pricing-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .pricing-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .pricing-tab {
+            padding: 0.8rem 2rem;
+            border: none;
+            background: #f5f5f5;
+            color: #333;
+            font-weight: 500;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-tab.active {
+            background: #FF5722;
+            color: white;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid #FF5722;
+            position: relative;
+        }
+
+        .popular-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #FF5722;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .plan-name {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .plan-price {
+            color: #FF5722;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: normal;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            color: #666;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .plan-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #FF5722;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background 0.3s ease;
+        }
+
+        .plan-button:hover {
+            background: #f4511e;
+        }
+
+        .plan-button.outline {
+            background: transparent;
+            border: 2px solid #FF5722;
+            color: #FF5722;
+        }
+
+        .plan-button.outline:hover {
+            background: #FF5722;
+            color: white;
+        }
+
+        .additional-info {
+            background: #f9f9f9;
+            padding: 4rem 2rem;
+            margin-top: 2rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .info-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .info-card i {
+            font-size: 2.5rem;
+            color: #FF5722;
+            margin-bottom: 1rem;
+        }
+
+        .info-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .info-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .faq-section {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+        }
+
+        .faq-question {
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            color: #666;
+            display: none;
+            padding-top: 1rem;
+            line-height: 1.6;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        @media (max-width: 1024px) {
+            .nav {
+                gap: 1.5rem;
+            }
+            
+            .nav-item {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-btn {
+                display: block;
+            }
+
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-hero h1 {
+                font-size: 2rem;
+            }
+
+            .pricing-hero p {
+                font-size: 1rem;
+            }
+
+            .pricing-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="login-buttons">
+            <a href="area_usuario/area_cliente.html" class="login-btn user-login">
+                <i>👤</i> Área do Cliente
+            </a>
+            <a href="area_adm.html" class="login-btn admin-login">
+                <i>🔒</i> Área Administrativa
+            </a>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="logo-container">
+            <a href="/" class="logo">
+                EscolaMove
+                <span>Transporte & Tecnologia</span>
+            </a>
+        </div>
+        
+        <button class="menu-btn">☰</button>
+
+        <nav class="nav">
+            <a href="home.html" class="nav-item">Home</a>
+            <a href="quem-somos.html" class="nav-item">Quem Somos</a>
+            <a href="noticias.html" class="nav-item">Notícias</a>
+            <a href="quanto-custa.html" class="nav-item">Quanto Custa</a>
+            <a href="onde-estamos.html" class="nav-item">Onde Estamos</a>
+            <a href="como-fazemos.html" class="nav-item">Como Fazemos</a>
+            <a href="cases.html" class="nav-item">Cases de Sucesso</a>
+            <a href="links.html" class="nav-item">Links</a>
+        </nav>
+    </header>
+
+    <div class="pricing-hero">
+        <h1>Quanto Custa</h1>
+        <p>Escolha o plano ideal para o transporte seguro do seu filho</p>
+    </div>
+
+    <main class="pricing-content">
+        <div class="pricing-tabs">
+            <button class="pricing-tab active">Mensal</button>
+            <button class="pricing-tab">Semestral</button>
+            <button class="pricing-tab">Anual</button>
+        </div>
+
+        <div class="pricing-grid">
+            
+            <div class="pricing-card">
+                <h2 class="plan-name">Plano Básico</h2>
+                <div class="plan-price">
+                    R$299<span>/mês</span>
+                </div>
+                <ul class="plan-features">
+                    <li>Transporte casa-escola-casa</li>
+                    <li>Rastreamento via aplicativo</li>
+                    <li>Seguro escolar</li>
+                    <li>Monitor de transporte</li>
+                    <li>Suporte via WhatsApp</li>
+                </ul>
+                <a href="#" class="plan-button outline">Escolher Plano</a>
+            </div>
+
+            
+            <div class="pricing-card popular">
+                <span class="popular-tag">Mais Popular</span>
+                <h2 class="plan-name">Plano Premium</h2>
+                <div class="plan-price">
+                    R$399<span>/mês</span>
+                </div>
+                <ul class="plan-features">
+                    <li>Todos os benefícios do Plano Básico</li>
+                    <li>Atividades extracurriculares</li>
+                    <li>Horários flexíveis</li>
+                    <li>Notificações em tempo real</li>
+                    <li>Atendimento prioritário 24/7</li>
+                </ul>
+                <a href="#" class="plan-button">Escolher Plano</a>
+            </div>
+
+            
+            <div class="pricing-card">
+                <h2 class="plan-name">Plano Personalizado</h2>
+                <div class="plan-price">
+                    Sob consulta
+                </div>
+                <ul class="plan-features">
+                    <li>Roteiros especiais</li>
+                    <li>Eventos e excursões</li>
+                    <li>Veículos exclusivos</li>
+                    <li>Motorista dedicado</li>
+                    <li>Customização total</li>
+                </ul>
+                <a href="#" class="plan-button outline">Solicitar Orçamento</a>
+            </div>
+        </div>
+
+        <div class="additional-info">
+            <div class="info-grid">
+                <div class="info-card">
+                    <i>🚌</i>
+                    <h3>Frota Moderna</h3>
+                    <p>Veículos novos com ar condicionado e GPS integrado para maior conforto e segurança.</p>
+                </div>
+                <div class="info-card">
+                    <i>👥</i>
+                    <h3>Equipe Qualificada</h3>
+                    <p>Motoristas e monitores treinados e certificados para o transporte escolar.</p>
+                </div>
+                <div class="info-card">
+                    <i>📱</i>
+                    <h3>Tecnologia Integrada</h3>
+                    <p>Acompanhamento em tempo real através do nosso aplicativo exclusivo.</p>
+                </div>
+                <div class="info-card">
+                    <i>🛡️</i>
+                    <h3>Segurança Garantida</h3>
+                    <p>Seguro completo e protocolos rigorosos de segurança em todas as viagens.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>Perguntas Frequentes</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    Como funciona o rastreamento via aplicativo?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Nosso aplicativo permite acompanhar em tempo real a localização do veículo, horários de chegada e saída, além de receber notificações importantes sobre o transporte do seu filho.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Qual é a política de cancelamento?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Os planos podem ser cancelados com 30 dias de antecedência, sem multa. Para cancelamentos com prazo menor, consulte nossos termos e condições.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Como são selecionados os motoristas?
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    Todos os motoristas passam por um rigoroso processo de seleção, incluindo verificação de antecedentes, exames médicos e psicológicos, além de treinamento específico para transporte escolar.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        
+        const menuBtn = document.querySelector('.menu-btn');
+        const nav = document.querySelector('.nav');
+        
+        menuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+      
+        const pricingTabs = document.querySelectorAll('.pricing-tab');
+        
+        pricingTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                pricingTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+       
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.classList.toggle('active');
+                question.querySelector('span').textContent = 
+                    answer.classList.contains('active') ? '-' : '+';
+            });
+        });
+    </script>
+</body>
+</html>

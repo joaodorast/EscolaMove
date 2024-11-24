@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quem Somos - EscolaMove</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .top-bar {
+            background-color: #FF5722;
+            padding: 0.5rem 2rem;
+            text-align: right;
+        }
+
+        .login-buttons {
+            display: inline-flex;
+            gap: 1rem;
+        }
+
+        .login-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.3rem 1rem;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-login {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-login {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            color: #FF5722;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #333;
+            font-weight: 300;
+            font-size: 1rem;
+            display: block;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #FF5722;
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover::after {
+            width: 100%;
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #333;
+            cursor: pointer;
+        }
+
+        
+        .about-content {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .about-hero {
+            background-color: #f5f5f5;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .about-hero h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-hero p {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-section {
+            margin-bottom: 4rem;
+        }
+
+        .about-section h2 {
+            color: #FF5722;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-section p {
+            color: #444;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .value-card {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .value-card i {
+            font-size: 2.5rem;
+            color: #FF5722;
+            margin-bottom: 1rem;
+        }
+
+        .value-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .value-card p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .nav {
+                gap: 1.5rem;
+            }
+            
+            .nav-item {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-btn {
+                display: block;
+            }
+
+            .nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+
+            .nav.active {
+                display: flex;
+            }
+
+            .about-hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="login-buttons">
+            <a href="area_usuario/area_cliente.html" class="login-btn user-login">
+                <i>👤</i> Área do Cliente
+            </a>
+            <a href="area_adm.html" class="login-btn admin-login">
+                <i>🔒</i> Área Administrativa
+            </a>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="logo-container">
+            <a href="/" class="logo">
+                EscolaMove
+                <span>Transporte & Tecnologia</span>
+            </a>
+        </div>
+        
+        <button class="menu-btn">☰</button>
+
+        <nav class="nav">
+            <a href="home.html" class="nav-item">Home</a>
+            <a href="quem-somos.html" class="nav-item">Quem Somos</a>
+            <a href="noticias.html" class="nav-item">Notícias</a>
+            <a href="quanto-custa.html" class="nav-item">Quanto Custa</a>
+            <a href="onde-estamos.html" class="nav-item">Onde Estamos</a>
+            <a href="como-fazemos.html" class="nav-item">Como Fazemos</a>
+            <a href="cases.html" class="nav-item">Cases de Sucesso</a>
+            <a href="links.html" class="nav-item">Links</a>
+        </nav>
+    </header>
+
+    <div class="about-hero">
+        <h1>Quem Somos</h1>
+        <p>Há mais de uma década revolucionando o transporte escolar com tecnologia, segurança e compromisso com a educação.</p>
+    </div>
+
+    <main class="about-content">
+        <section class="about-section">
+            <h2>Nossa História</h2>
+            <p>A EscolaMove nasceu da visão de transformar o transporte escolar em uma experiência segura, eficiente e tecnológica. Desde 2024, temos sido pioneiros na integração de tecnologia avançada com serviços de transporte escolar de alta qualidade.</p>
+            <p>Ao longo dos anos, desenvolvemos soluções inovadoras que permitem aos pais acompanhar em tempo real o trajeto de seus filhos, garantindo tranquilidade e segurança para todas as famílias que confiam em nossos serviços.</p>
+        </section>
+
+        <section class="about-section">
+            <h2>Nossa Missão</h2>
+            <p>Proporcionar um serviço de transporte escolar seguro, pontual e tecnológico, contribuindo para a tranquilidade das famílias e para o desenvolvimento educacional dos estudantes.</p>
+        </section>
+
+        <section class="about-section">
+            <h2>Nossos Valores</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <i>🛡️</i>
+                    <h3>Segurança</h3>
+                    <p>Priorizamos a segurança em cada aspecto de nosso serviço, desde a seleção de motoristas até a manutenção da frota.</p>
+                </div>
+                <div class="value-card">
+                    <i>⚡</i>
+                    <h3>Inovação</h3>
+                    <p>Buscamos constantemente novas tecnologias e soluções para melhorar a experiência de nossos usuários.</p>
+                </div>
+                <div class="value-card">
+                    <i>🤝</i>
+                    <h3>Compromisso</h3>
+                    <p>Mantemos um compromisso inabalável com a pontualidade e qualidade em nossos serviços.</p>
+                </div>
+                <div class="value-card">
+                    <i>♻️</i>
+                    <h3>Sustentabilidade</h3>
+                    <p>Trabalhamos com responsabilidade ambiental, buscando reduzir nossa pegada ecológica.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const menuBtn = document.querySelector('.menu-btn');
+        const nav = document.querySelector('.nav');
+        
+        menuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .admin-logo {
+            color: #FF5722;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .admin-logo span {
+            color: white;
+            font-weight: 300;
+            font-size: 0.8rem;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .admin-nav {
+            list-style: none;
+        }
+
+        .admin-nav-item {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .admin-nav-item:hover {
+            background-color: rgba(255, 87, 34, 0.1);
+            color: #FF5722;
+        }
+
+        .admin-nav-item.active {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            background-color: #f5f5f5;
+        }
+
+        .top-header {
+            background-color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #FF5722;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .payments-content {
+            padding: 2rem;
+        }
+
+        .payments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .new-payment-btn {
+            background-color: #FF5722;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .payment-filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-input {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            flex: 1;
+        }
+
+        .payments-table {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #f8f8f8;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-paid {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-pending {
+            background-color: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .status-overdue {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        .action-btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .edit-btn {
+            background-color: #e3f2fd;
+            color: #1976D2;
+            margin-right: 0.5rem;
+        }
+
+        .delete-btn {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        @media (max-width: 768px) {
+            .admin-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .filter-group {
+                flex-direction: column;
+            }
+
+            .payments-table {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar">
+            <a href="/" class="admin-logo">
+                EscolaMove
+                <span>Painel Administrativo</span>
+            </a>
+            <nav class="admin-nav">
+                <a href="area_adm.html" class="admin-nav-item">📊 Dashboard</a>
+                <a href="alunos.html" class="admin-nav-item">👥 Alunos</a>
+                <a href="rotas.html" class="admin-nav-item">🚌 Rotas</a>
+                <a href="motoristas.html" class="admin-nav-item">🚘 Motoristas</a>
+                <a href="escolas.html" class="admin-nav-item">🏫 Escolas</a>
+                <a href="pagamentos.html" class="admin-nav-item active">💰 Pagamentos</a>
+                <a href="relatorios.html" class="admin-nav-item">📝 Relatórios</a>
+                <a href="configuraçoes.html" class="admin-nav-item">⚙️ Configurações</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <h2>Gerenciamento de Pagamentos</h2>
+                <div class="admin-info">
+                    <div class="admin-avatar">A</div>
+                    <div>
+                        <div class="admin-name">Admin</div>
+                        <div class="admin-role">Administrador</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="payments-content">
+                <div class="payments-header">
+                    <h3>Pagamentos</h3>
+                    <button class="new-payment-btn">
+                        ➕ Novo Pagamento
+                    </button>
+                </div>
+
+                <div class="payment-filters">
+                    <div class="filter-group">
+                        <input type="text" class="filter-input" placeholder="Buscar por aluno...">
+                        <select class="filter-input">
+                            <option value="">Status do Pagamento</option>
+                            <option value="paid">Pago</option>
+                            <option value="pending">Pendente</option>
+                            <option value="overdue">Atrasado</option>
+                        </select>
+                        <input type="month" class="filter-input">
+                    </div>
+                </div>
+
+                <div class="payments-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Aluno</th>
+                                <th>Valor</th>
+                                <th>Vencimento</th>
+                                <th>Status</th>
+                                <th>Método</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#1234</td>
+                                <td>João Silva</td>
+                                <td>R$ 350,00</td>
+                                <td>15/11/2024</td>
+                                <td><span class="status-badge status-paid">Pago</span></td>
+                                <td>PIX</td>
+                                <td>
+                                    <button class="action-btn edit-btn">Editar</button>
+                                    <button class="action-btn delete-btn">Excluir</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#1235</td>
+                                <td>Maria Santos</td>
+                                <td>R$ 350,00</td>
+                                <td>20/11/2024</td>
+                                <td><span class="status-badge status-pending">Pendente</span></td>
+                                <td>Boleto</td>
+                                <td>
+                                    <button class="action-btn edit-btn">Editar</button>
+                                    <button class="action-btn delete-btn">Excluir</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#1236</td>
+                                <td>Pedro Oliveira</td>
+                                <td>R$ 350,00</td>
+                                <td>10/11/2024</td>
+                                <td><span class="status-badge status-overdue">Atrasado</span></td>
+                                <td>Cartão</td>
+                                <td>
+                                    <button class="action-btn edit-btn">Editar</button>
+                                    <button class="action-btn delete-btn">Excluir</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const paymentsTableBody = document.querySelector("tbody");
+    const newPaymentBtn = document.querySelector(".new-payment-btn");
+
+    let payments = JSON.parse(localStorage.getItem("payments")) || [
+        { id: '#1234', student: 'João Silva', value: 'R$ 350,00', dueDate: '15/11/2024', status: 'paid', method: 'PIX' },
+        { id: '#1235', student: 'Maria Santos', value: 'R$ 350,00', dueDate: '20/11/2024', status: 'pending', method: 'Boleto' },
+        { id: '#1236', student: 'Pedro Oliveira', value: 'R$ 350,00', dueDate: '10/11/2024', status: 'overdue', method: 'Cartão' }
+    ];
+
+    function renderPayments() {
+        paymentsTableBody.innerHTML = "";
+        payments.forEach(payment => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${payment.id}</td>
+                <td>${payment.student}</td>
+                <td>${payment.value}</td>
+                <td>${payment.dueDate}</td>
+                <td><span class="status-badge status-${payment.status}">${capitalize(payment.status)}</span></td>
+                <td>${payment.method}</td>
+                <td>
+                    <button class="action-btn edit-btn" data-id="${payment.id}">Editar</button>
+                    <button class="action-btn delete-btn" data-id="${payment.id}">Excluir</button>
+                </td>
+            `;
+            paymentsTableBody.appendChild(row);
+        });
+        saveToLocalStorage();
+    }
+
+    function capitalize(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    function addPayment() {
+        const newPayment = {
+            id: `#${Math.floor(Math.random() * 10000)}`,
+            student: prompt("Nome do Aluno:"),
+            value: prompt("Valor:"),
+            dueDate: prompt("Data de Vencimento (DD/MM/AAAA):"),
+            status: prompt("Status (paid/pending/overdue):").toLowerCase(),
+            method: prompt("Método de Pagamento:")
+        };
+        payments.push(newPayment);
+        renderPayments();
+    }
+
+    function editPayment(id) {
+        const payment = payments.find(p => p.id === id);
+        if (payment) {
+            payment.student = prompt("Nome do Aluno:", payment.student);
+            payment.value = prompt("Valor:", payment.value);
+            payment.dueDate = prompt("Data de Vencimento (DD/MM/AAAA):", payment.dueDate);
+            payment.status = prompt("Status (paid/pending/overdue):", payment.status).toLowerCase();
+            payment.method = prompt("Método de Pagamento:", payment.method);
+            renderPayments();
+        }
+    }
+
+    function deletePayment(id) {
+        if (confirm("Tem certeza que deseja excluir este pagamento?")) {
+            const index = payments.findIndex(p => p.id === id);
+            if (index > -1) {
+                payments.splice(index, 1);
+                renderPayments();
+            }
+        }
+    }
+
+    function saveToLocalStorage() {
+        localStorage.setItem("payments", JSON.stringify(payments));
+    }
+
+    newPaymentBtn.addEventListener("click", addPayment);
+    
+    paymentsTableBody.addEventListener("click", function(event) {
+        if (event.target.classList.contains("edit-btn")) {
+            const id = event.target.getAttribute("data-id");
+            editPayment(id);
+        } else if (event.target.classList.contains("delete-btn")) {
+            const id = event.target.getAttribute("data-id");
+            deletePayment(id);
+        }
+    });
+
+    renderPayments();
+});
+    </script>
+</body>
+</html>

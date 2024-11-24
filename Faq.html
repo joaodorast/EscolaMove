@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - EscolaMove</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+       
+        .top-bar {
+            background-color: #FF5722;
+            padding: 0.5rem 2rem;
+            text-align: right;
+        }
+
+        .login-buttons {
+            display: inline-flex;
+            gap: 1rem;
+        }
+
+        .login-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.3rem 1rem;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-login {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-login {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            color: #FF5722;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #333;
+            font-weight: 300;
+            font-size: 1rem;
+            display: block;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+       
+        .faq-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1920/300');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .faq-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .faq-search {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .faq-categories {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .category-btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            background-color: #f5f5f5;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn.active {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background-color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: #f9f9f9;
+        }
+
+        .faq-answer {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+        }
+
+        .faq-answer.active {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: #FF5722;
+        }
+
+        .faq-question.active::after {
+            content: '-';
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .faq-container {
+                padding: 0 1rem;
+            }
+
+            .faq-question {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .faq-answer {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="login-buttons">
+            <a href="area_usuario/area_cliente.html" class="login-btn user-login">
+                <i>👤</i> Área do Cliente
+            </a>
+            <a href="area_adm.html" class="login-btn admin-login">
+                <i>🔒</i> Área Administrativa
+            </a>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="logo-container">
+            <a href="/" class="logo">
+                EscolaMove
+                <span>Transporte & Tecnologia</span>
+            </a>
+        </div>
+        
+        <nav class="nav">
+            <a href="home.html" class="nav-item">Home</a>
+            <a href="quem-somos.html" class="nav-item">Quem Somos</a>
+            <a href="noticias.html" class="nav-item">Notícias</a>
+            <a href="quanto-custa.html" class="nav-item">Quanto Custa</a>
+            <a href="onde-estamos.html" class="nav-item">Onde Estamos</a>
+            <a href="como-fazemos.html" class="nav-item">Como Fazemos</a>
+            <a href="cases.html" class="nav-item">Cases de Sucesso</a>
+            <a href="links.html" class="nav-item">Links</a>
+        </nav>
+    </header>
+
+    <section class="faq-hero">
+        <h1>Perguntas Frequentes</h1>
+        <p>Encontre respostas para suas dúvidas sobre nossos serviços</p>
+    </section>
+
+    <div class="faq-container">
+        <div class="faq-search">
+            <input type="text" class="search-input" placeholder="Buscar perguntas frequentes...">
+            <div class="faq-categories">
+                <button class="category-btn active">Todos</button>
+                <button class="category-btn">Serviços</button>
+                <button class="category-btn">Segurança</button>
+                <button class="category-btn">Pagamento</button>
+                <button class="category-btn">App</button>
+            </div>
+        </div>
+
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-question">Como funciona o monitoramento em tempo real?</div>
+                <div class="faq-answer">
+                    Nosso sistema de monitoramento utiliza GPS e um aplicativo exclusivo que permite aos pais acompanharem todo o trajeto do veículo em tempo real. Você receberá notificações sobre a chegada do transporte, além de poder visualizar a localização exata do veículo a qualquer momento.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Quais são as formas de pagamento aceitas?</div>
+                <div class="faq-answer">
+                    Aceitamos diversas formas de pagamento para sua comodidade: cartão de crédito (até 12x), débito, boleto bancário e PIX. O pagamento é realizado mensalmente e pode ser configurado de forma recorrente para maior praticidade.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Os veículos possuem seguro?</div>
+                <div class="faq-answer">
+                    Sim, todos os nossos veículos possuem seguro completo que cobre passageiros e terceiros. Além disso, mantemos seguros adicionais específicos para transporte escolar, garantindo a máxima segurança e tranquilidade para nossos clientes.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Como é feita a seleção dos motoristas?</div>
+                <div class="faq-answer">
+                    Nossos motoristas passam por um rigoroso processo de seleção que inclui: verificação de antecedentes, exame toxicológico, avaliação psicológica, e comprovação de experiência. Além disso, todos participam de treinamentos regulares sobre direção defensiva e primeiros socorros.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">O que fazer em caso de atraso do aluno?</div>
+                <div class="faq-answer">
+                    Em caso de atraso, pedimos que os pais notifiquem através do nosso aplicativo ou central de atendimento com antecedência. Nossa política prevê uma tolerância de 3 minutos no ponto de embarque, respeitando assim o horário dos demais alunos.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 EscolaMove. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+       
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const isActive = question.classList.contains('active');
+
+                
+                document.querySelectorAll('.faq-question').forEach(q => {
+                    q.classList.remove('active');
+                    q.nextElementSibling.classList.remove('active');
+                });
+
+                
+                if (!isActive) {
+                    question.classList.add('active');
+                    answer.classList.add('active');
+                }
+            });
+        });
+
+       
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            document.querySelectorAll('.faq-item').forEach(item => {
+                const question = item.querySelector('.faq-question').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

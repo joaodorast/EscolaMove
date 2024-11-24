@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EscolaMove - Área do Cliente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .client-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .client-logo {
+            color: #FF5722;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .client-logo span {
+            color: white;
+            font-weight: 300;
+            font-size: 0.8rem;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        .client-nav {
+            list-style: none;
+        }
+
+        .client-nav-item {
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .client-nav-item:hover {
+            background-color: rgba(255, 87, 34, 0.1);
+            color: #FF5722;
+        }
+
+        .client-nav-item.active {
+            background-color: #FF5722;
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            background-color: #f5f5f5;
+        }
+
+        .top-header {
+            background-color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .client-avatar {
+            width: 40px;
+            height: 40px;
+            background-color: #FF5722;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .client-name {
+            font-weight: 500;
+        }
+
+        .client-role {
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .dashboard-content {
+            padding: 2rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .route-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .route-icon {
+            font-size: 2rem;
+        }
+
+        .card-header {
+            color: #333;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .schedule-card {
+            margin-top: 1.5rem;
+        }
+
+        .schedule-day {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .schedule-day:last-child {
+            border-bottom: none;
+        }
+
+        .day-name {
+            color: #666;
+        }
+
+        .payment-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-paid {
+            background-color: #E8F5E9;
+            color: #4CAF50;
+        }
+
+        .status-pending {
+            background-color: #FFF3E0;
+            color: #FF9800;
+        }
+
+        .action-button {
+            background-color: #FF5722;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-button:hover {
+            background-color: #F4511E;
+        }
+
+        @media (max-width: 768px) {
+            .client-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="client-container">
+        <aside class="sidebar">
+            <a href="/" class="client-logo">
+                EscolaMove
+                <span>Área do Cliente</span>
+            </a>
+            <nav class="client-nav">
+                <a href="area_cliente.html" class="client-nav-item active">📊 Início</a>
+                <a href="rotas-de-user.html" class="client-nav-item">🚌 Minha Rota</a>
+                <a href="pagamentos-de-user.html" class="client-nav-item">💰 Pagamentos</a>
+                <a href="calendario-de-user.html" class="client-nav-item">📅 Calendário</a>
+                <a href="comunicado-de-user.html" class="client-nav-item">📝 Comunicados</a>
+                <a href="configurações-de-user.html" class="client-nav-item">⚙️ Configurações</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <h2>Meu Painel</h2>
+                <div class="client-info">
+                    <div class="client-avatar">JS</div>
+                    <div>
+                        <div class="client-name">João Silva</div>
+                        <div class="client-role">Aluno</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-content">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="card-header">
+                            Informações da Rota
+                            <span class="status-badge">Ativo</span>
+                        </div>
+                        <div class="route-info">
+                            <span class="route-icon">🚌</span>
+                            <div>
+                                <h3>Rota #42 - Zona Sul</h3>
+                                <p style="color: #666;">Motorista: batata</p>
+                            </div>
+                        </div>
+                        <ul class="info-list">
+                            <li class="info-item">
+                                <span class="info-label">Horário de Embarque:</span>
+                                <span class="info-value">06:45</span>
+                            </li>
+                            <li class="info-item">
+                                <span class="info-label">Local:</span>
+                                <span class="info-value">Rua jardim primavera, 123</span>
+                            </li>
+                            <li class="info-item">
+                                <span class="info-label">Chegada Prevista:</span>
+                                <span class="info-value">07:30</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="card-header">
+                            Próximo Pagamento
+                        </div>
+                        <ul class="info-list">
+                            <li class="info-item">
+                                <span class="info-label">Valor:</span>
+                                <span class="info-value">R$ 350,00</span>
+                            </li>
+                            <li class="info-item">
+                                <span class="info-label">Vencimento:</span>
+                                <span class="info-value">15/12/2024</span>
+                            </li>
+                            <li class="info-item">
+                                <span class="info-label">Status:</span>
+                                <span class="payment-status status-pending">Pendente</span>
+                            </li>
+                        </ul>
+                        <div style="margin-top: 1rem; text-align: center;">
+                            <button class="action-button">Realizar Pagamento</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card schedule-card">
+                    <div class="card-header">
+                        Horários da Semana
+                    </div>
+                    <div class="schedule-day">
+                        <span class="day-name">Segunda-feira</span>
+                        <span class="info-value">Embarque: 06:45 | Retorno: 12:30</span>
+                    </div>
+                    <div class="schedule-day">
+                        <span class="day-name">Terça-feira</span>
+                        <span class="info-value">Embarque: 06:45 | Retorno: 12:30</span>
+                    </div>
+                    <div class="schedule-day">
+                        <span class="day-name">Quarta-feira</span>
+                        <span class="info-value">Embarque: 06:45 | Retorno: 12:30</span>
+                    </div>
+                    <div class="schedule-day">
+                        <span class="day-name">Quinta-feira</span>
+                        <span class="info-value">Embarque: 06:45 | Retorno: 12:30</span>
+                    </div>
+                    <div class="schedule-day">
+                        <span class="day-name">Sexta-feira</span>
+                        <span class="info-value">Embarque: 06:45 | Retorno: 12:30</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
