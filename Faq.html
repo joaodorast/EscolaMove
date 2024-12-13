@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ - EscolaMove</title>
+    <title>FAQ - SafeRoute</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,6 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-       
         .top-bar {
             background-color: #FF5722;
             padding: 0.5rem 2rem;
@@ -92,7 +91,6 @@
             padding: 0.5rem 0;
         }
 
-       
         .faq-hero {
             background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1920/300');
             background-size: cover;
@@ -236,11 +234,11 @@
     <header class="header">
         <div class="logo-container">
             <a href="/" class="logo">
-                EscolaMove
+                SafeRoute
                 <span>Transporte & Tecnologia</span>
             </a>
         </div>
-        
+
         <nav class="nav">
             <a href="home.html" class="nav-item">Home</a>
             <a href="quem-somos.html" class="nav-item">Quem Somos</a>
@@ -271,35 +269,35 @@
         </div>
 
         <div class="faq-list">
-            <div class="faq-item">
+            <div class="faq-item" data-category="servicos">
                 <div class="faq-question">Como funciona o monitoramento em tempo real?</div>
                 <div class="faq-answer">
                     Nosso sistema de monitoramento utiliza GPS e um aplicativo exclusivo que permite aos pais acompanharem todo o trajeto do veículo em tempo real. Você receberá notificações sobre a chegada do transporte, além de poder visualizar a localização exata do veículo a qualquer momento.
                 </div>
             </div>
 
-            <div class="faq-item">
+            <div class="faq-item" data-category="pagamento">
                 <div class="faq-question">Quais são as formas de pagamento aceitas?</div>
                 <div class="faq-answer">
-                    Aceitamos diversas formas de pagamento para sua comodidade: cartão de crédito (até 12x), débito, boleto bancário e PIX. O pagamento é realizado mensalmente e pode ser configurado de forma recorrente para maior praticidade.
+                    Aceitamos diversas formas de pagamento para sua comodidade: cartão de crédito (até 6x), débito, boleto bancário e PIX. O pagamento é realizado mensalmente e pode ser configurado de forma recorrente para maior praticidade.
                 </div>
             </div>
 
-            <div class="faq-item">
+            <div class="faq-item" data-category="seguranca">
                 <div class="faq-question">Os veículos possuem seguro?</div>
                 <div class="faq-answer">
                     Sim, todos os nossos veículos possuem seguro completo que cobre passageiros e terceiros. Além disso, mantemos seguros adicionais específicos para transporte escolar, garantindo a máxima segurança e tranquilidade para nossos clientes.
                 </div>
             </div>
 
-            <div class="faq-item">
+            <div class="faq-item" data-category="servicos">
                 <div class="faq-question">Como é feita a seleção dos motoristas?</div>
                 <div class="faq-answer">
                     Nossos motoristas passam por um rigoroso processo de seleção que inclui: verificação de antecedentes, exame toxicológico, avaliação psicológica, e comprovação de experiência. Além disso, todos participam de treinamentos regulares sobre direção defensiva e primeiros socorros.
                 </div>
             </div>
 
-            <div class="faq-item">
+            <div class="faq-item" data-category="servicos">
                 <div class="faq-question">O que fazer em caso de atraso do aluno?</div>
                 <div class="faq-answer">
                     Em caso de atraso, pedimos que os pais notifiquem através do nosso aplicativo ou central de atendimento com antecedência. Nossa política prevê uma tolerância de 3 minutos no ponto de embarque, respeitando assim o horário dos demais alunos.
@@ -309,23 +307,20 @@
     </div>
 
     <footer>
-        <p>&copy; 2024 EscolaMove. Todos os direitos reservados.</p>
+        <p>© 2024 SafeRoute. Todos os direitos reservados.</p>
     </footer>
 
     <script>
-       
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const answer = question.nextElementSibling;
                 const isActive = question.classList.contains('active');
 
-                
                 document.querySelectorAll('.faq-question').forEach(q => {
                     q.classList.remove('active');
                     q.nextElementSibling.classList.remove('active');
                 });
 
-                
                 if (!isActive) {
                     question.classList.add('active');
                     answer.classList.add('active');
@@ -333,7 +328,6 @@
             });
         });
 
-       
         const searchInput = document.querySelector('.search-input');
         searchInput.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
@@ -349,11 +343,22 @@
             });
         });
 
-        
         document.querySelectorAll('.category-btn').forEach(btn => {
             btn.addEventListener('click', () => {
+                const selectedCategory = btn.textContent.toLowerCase();
+                
                 document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
+
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    const category = item.dataset.category;
+
+                    if (selectedCategory === 'todos' || category === selectedCategory) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
             });
         });
     </script>

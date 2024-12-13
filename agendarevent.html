@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Evento - SafeRoute</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .top-bar {
+            background-color: #FF5722;
+            padding: 0.5rem 2rem;
+            text-align: right;
+        }
+
+        .login-buttons {
+            display: inline-flex;
+            gap: 1rem;
+        }
+
+        .login-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.3rem 1rem;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-login {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-login {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .login-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            color: #FF5722;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #333;
+            font-weight: 300;
+            font-size: 1rem;
+            display: block;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .event-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        .event-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .event-header h1 {
+            color: #FF5722;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #FF5722;
+            box-shadow: 0 0 0 2px rgba(255,87,34,0.2);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: #FF5722;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #f4511e;
+        }
+
+        .event-details {
+            background-color: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-top: 2rem;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            color: #FF5722;
+            margin-bottom: 1rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .event-container {
+                padding: 1rem;
+                margin: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="login-buttons">
+            <a href="login-cliente.html" class="login-btn user-login">
+                <i>👤</i> Área do Cliente
+            </a>
+            <a href="login-adm.html" class="login-btn admin-login">
+                <i>🔒</i> Área Administrativa
+            </a>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="logo-container">
+            <a href="index.html" class="logo">
+                SafeRoute
+                <span>Transporte & Tecnologia</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="event-container">
+        <div class="event-header">
+            <h1>Agendar Evento Escolar</h1>
+            <p>Preencha o formulário abaixo para solicitar o transporte para seu evento escolar.</p>
+        </div>
+
+        <form id="eventForm">
+            <div class="form-group">
+                <label for="schoolName">Nome da Escola</label>
+                <input type="text" class="form-control" id="schoolName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="eventType">Tipo de Evento</label>
+                <select class="form-control" id="eventType" required>
+                    <option value="">Selecione o tipo de evento</option>
+                    <option value="excursao">Excursão Educacional</option>
+                    <option value="esporte">Evento Esportivo</option>
+                    <option value="cultural">Atividade Cultural</option>
+                    <option value="outro">Outro</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="eventDate">Data do Evento</label>
+                <input type="date" class="form-control" id="eventDate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="studentsCount">Número de Estudantes</label>
+                <input type="number" class="form-control" id="studentsCount" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="eventDetails">Detalhes Adicionais</label>
+                <textarea class="form-control" id="eventDetails" rows="4" placeholder="Informações adicionais sobre o evento"></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Solicitar Agendamento</button>
+        </form>
+
+        <div class="event-details">
+            <h3>O que acontece depois?</h3>
+            <p>Após o envio do formulário, nossa equipe irá:</p>
+            <ol>
+                <li>Avaliar a solicitação em até 24 horas</li>
+                <li>Entrar em contato para confirmar detalhes</li>
+                <li>Preparar veículos adequados</li>
+                <li>Enviar confirmação final com todos os detalhes</li>
+            </ol>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>SafeRoute</h3>
+                <p>Transporte escolar com tecnologia e segurança para sua tranquilidade.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Links Rápidos</h3>
+                <ul>
+                    <li><a href="quem-somos.html">Sobre Nós</a></li>
+                    <li><a href="servicos.html">Serviços</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contato</h3>
+                <ul>
+                    <li><a href="tel:+551144445555">(11) 4444-5555</a></li>
+                    <li><a href="mailto:contato@escolamove.com.br">contato@escolamove.com.br</a></li>
+                    <li>Campos Elisios, 1000 - Duque de Caxias/RJ</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Redes Sociais</h3>
+                <ul>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+            <p>&copy; 2024 SafeRoute. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('eventForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                schoolName: document.getElementById('schoolName').value,
+                eventType: document.getElementById('eventType').value,
+                eventDate: document.getElementById('eventDate').value,
+                studentsCount: document.getElementById('studentsCount').value,
+                eventDetails: document.getElementById('eventDetails').value
+            };
+
+          
+            alert('Solicitação enviada com sucesso!\nEntraremos em contato em breve.');
+            
+            
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Aluno - SafeRoute</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .top-bar {
+            background-color: #FF5722;
+            padding: 0.5rem 2rem;
+            text-align: right;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .logo {
+            color: #FF5722;
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+        .logo span {
+            color: #333;
+            font-weight: 300;
+            font-size: 1rem;
+            display: block;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .dashboard {
+            max-width: 900px;
+            margin: 3rem auto;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+        .sidebar {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            background-color: #FF5722;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 4rem;
+            text-transform: uppercase;
+        }
+        .sidebar-menu {
+            list-style: none;
+            margin-top: 2rem;
+        }
+        .sidebar-menu li {
+            margin-bottom: 1rem;
+        }
+        .sidebar-menu a {
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .sidebar-menu a:hover {
+            background-color: #f5f5f5;
+            color: #FF5722;
+        }
+        .main-content {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        .teacher-info {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 400px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <button id="logoutBtn" style="color: white; background: none; border: none; cursor: pointer;">Sair</button>
+    </div>
+    
+    <header class="header">
+        <div class="logo-container">
+            <a href="/" class="logo">
+                SafeRoute
+                <span>Transporte & Tecnologia</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="dashboard">
+        <div class="sidebar">
+            <div class="profile-pic" id="profileInitial">P</div>
+            <h2 class="text-center" id="studentName">Professor</h2>
+            <ul class="sidebar-menu">
+                <li><a href="#" id="disciplinasLink"><i>📚</i> Disciplinas</a></li>
+                <li><a href="#" id="calendarioLink"><i>📅</i> Calendário</a></li>
+                <li><a href="#" id="notasLink"><i>📊</i> Notas</a></li>
+                <li><a href="#" id="transporteLink"><i>🚌</i> Transporte</a></li>
+                <li><a href="#" id="boletimLink"><i>📝</i> Boletim</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <h1>Informações do Professor</h1>
+            <div class="teacher-info">
+                <div class="info-grid">
+                    <div>
+                        <strong>Nome:</strong>
+                        <p id="teacherName">-</p>
+                    </div>
+                    <div>
+                        <strong>E-mail:</strong>
+                        <p id="teacherEmail">-</p>
+                    </div>
+                    <div>
+                        <strong>Escola:</strong>
+                        <p id="teacherSchool">-</p>
+                    </div>
+                    <div>
+                        <strong>Disciplina:</strong>
+                        <p id="teacherDiscipline">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Próximas Aulas</h2>
+            <table id="upcomingClassesTable" style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background-color: #f5f5f5;">
+                        <th style="padding: 0.5rem; text-align: left;">Disciplina</th>
+                        <th style="padding: 0.5rem; text-align: left;">Data</th>
+                        <th style="padding: 0.5rem; text-align: left;">Horário</th>
+                    </tr>
+                </thead>
+                <tbody id="upcomingClassesBody">
+                    <tr>
+                        <td style="padding: 0.5rem;">História</td>
+                        <td style="padding: 0.5rem;">18/12/2024</td>
+                        <td style="padding: 0.5rem;">14:00 - 16:00</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem;">História</td>
+                        <td style="padding: 0.5rem;">19/12/2024</td>
+                        <td style="padding: 0.5rem;">10:00 - 12:00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Aviso</h2>
+            <p id="modalMessage">Funcionalidade em desenvolvimento.</p>
+            <button id="closeModalBtn" style="margin-top: 1rem; padding: 0.5rem 1rem; background-color: #FF5722; color: white; border: none; border-radius: 5px;">Fechar</button>
+        </div>
+    </div>
+
+    <script>
+        function populateTeacherInfo() {
+            const teacherData = JSON.parse(localStorage.getItem('professorData'));
+
+            if (teacherData) {
+                document.getElementById('teacherName').textContent = teacherData.nome;
+                document.getElementById('teacherEmail').textContent = teacherData.email;
+                document.getElementById('teacherSchool').textContent = teacherData.escola;
+                document.getElementById('teacherDiscipline').textContent = teacherData.disciplina;
+                document.getElementById('profileInitial').textContent = teacherData.initial;
+                document.getElementById('studentName').textContent = teacherData.nome.split(' ')[0]; 
+            }
+        }
+
+        function setupModalEvents() {
+            const modal = document.getElementById('messageModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const modalLinks = [
+                'disciplinasLink', 'calendarioLink', 
+                'notasLink', 'transporteLink', 'boletimLink'
+            ];
+
+            modalLinks.forEach(linkId => {
+                document.getElementById(linkId).addEventListener('click', function(e) {
+                    e.preventDefault();
+                    modal.style.display = 'flex';
+                });
+            });
+
+            closeModalBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        function setupLogoutButton() {
+            const logoutBtn = document.getElementById('logoutBtn');
+            logoutBtn.addEventListener('click', function() {
+                alert('Logout realizado com sucesso!');
+                localStorage.removeItem('professorData'); 
+                window.location.href = 'login.html'; 
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            populateTeacherInfo();
+            setupModalEvents();
+            setupLogoutButton();
+        });
+    </script>
+</body>
+</html>

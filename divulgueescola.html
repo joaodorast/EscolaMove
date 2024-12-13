@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Links Úteis - EscolaMove</title>
+    <title>Divulgue sua Escola - SafeRoute</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,6 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        
         .top-bar {
             background-color: #FF5722;
             padding: 0.5rem 2rem;
@@ -101,7 +100,6 @@
 
         .nav-item:hover::after { width: 100%; }
 
-        
         .page-header {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1920/300');
             background-size: cover;
@@ -122,62 +120,60 @@
             margin: 0 auto;
         }
 
-        .links-container {
+        .content-container {
             max-width: 1200px;
             margin: 4rem auto;
             padding: 0 2rem;
         }
 
-        .links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .links-category {
+        .form-section {
             background: white;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 2rem;
-            transition: transform 0.3s ease;
         }
 
-        .links-category:hover {
-            transform: translateY(-5px);
-        }
-
-        .links-category h2 {
+        .form-section h2 {
             color: #FF5722;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
             margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
-        .links-list {
-            list-style: none;
-        }
-
-        .links-list li {
-            margin-bottom: 1rem;
-        }
-
-        .links-list a {
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
             color: #333;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem;
-            border-radius: 5px;
-            transition: all 0.3s ease;
         }
 
-        .links-list a:hover {
-            background-color: #f5f5f5;
-            color: #FF5722;
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: #FF5722;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #E64A19;
         }
 
         footer {
@@ -189,10 +185,6 @@
         }
 
         @media (max-width: 768px) {
-            .links-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .page-header {
                 padding: 3rem 1rem;
             }
@@ -236,52 +228,66 @@
     </header>
 
     <div class="page-header">
-        <h1>Links Úteis</h1>
-        <p>Recursos e informações importantes para pais, alunos e parceiros</p>
+        <h1>Divulgue sua Escola</h1>
+        <p>Compartilhe os detalhes da sua instituição de ensino e explore nossos serviços de transporte escolar</p>
     </div>
 
-    <main class="links-container">
-        <div class="links-grid">
-            <div class="links-category">
-                <h2><i>📚</i> Educação</h2>
-                <ul class="links-list">
-                    <li><a href="#"><i>🏫</i> Ministério da Educação</a></li>
-                    <li><a href="cadastro-portaldoprof.html"><i>📖</i> Portal do Professor</a></li>
-                    <li><a href="#"><i>🎓</i> FNDE - Transporte Escolar</a></li>
-                    <li><a href="#"><i>📝</i> Base Nacional Comum Curricular</a></li>
-                </ul>
-            </div>
+    <main class="content-container">
+        <section class="form-section">
+            <h2>Formulário de Divulgação</h2>
+            <form id="escola-form" action="#" method="post">
+                <div class="form-group">
+                    <label for="nome-escola">Nome da Escola</label>
+                    <input type="text" id="nome-escola" name="nome-escola" required>
+                </div>
 
-            <div class="links-category">
-                <h2><i>🚌</i> Transporte Escolar</h2>
-                <ul class="links-list">
-                    <li><a href="#"><i>📋</i> Legislação do Transporte Escolar</a></li>
-                    <li><a href="#"><i>🎯</i> Normas de Segurança</a></li>
-                    <li><a href="#"><i>📱</i> Download do App SafeRoute</a></li>
-                    <li><a href="#"><i>🔍</i> Consulta de Itinerários</a></li>
-                </ul>
-            </div>
+                <div class="form-group">
+                    <label for="tipo-escola">Tipo de Instituição</label>
+                    <select id="tipo-escola" name="tipo-escola" required>
+                        <option value="">Selecione o tipo de escola</option>
+                        <option value="publica">Escola Pública</option>
+                        <option value="privada">Escola Privada</option>
+                        <option value="particular">Escola Particular</option>
+                    </select>
+                </div>
 
-            <div class="links-category">
-                <h2><i>👥</i> Parceiros</h2>
-                <ul class="links-list">
-                    <li><a href="#"><i>🏢</i> Escolas Parceiras</a></li>
-                    <li><a href="#"><i>🤝</i> Programa de Parceria</a></li>
-                    <li><a href="#"><i>💼</i> Trabalhe Conosco</a></li>
-                    <li><a href="divulgueescola.html"><i>📢</i> Divulgue sua Escola</a></li>
-                </ul>
-            </div>
+                <div class="form-group">
+                    <label for="endereco">Endereço</label>
+                    <input type="text" id="endereco" name="endereco" required>
+                </div>
 
-            <div class="links-category">
-                <h2><i>ℹ️</i> Informações Úteis</h2>
-                <ul class="links-list">
-                    <li><a href="#"><i>📅</i> Calendário Escolar</a></li>
-                    <li><a href="#"><i>⚠️</i> Avisos Importantes</a></li>
-                    <li><a href="#"><i>❓</i> Perguntas Frequentes</a></li>
-                    <li><a href="#"><i>📞</i> Canais de Atendimento</a></li>
-                </ul>
-            </div>
-        </div>
+                <div class="form-group">
+                    <label for="cidade">Cidade</label>
+                    <input type="text" id="cidade" name="cidade" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <select id="estado" name="estado" required>
+                        <option value="">Selecione o estado</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                       
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="qtd-alunos">Quantidade de Alunos</label>
+                    <input type="number" id="qtd-alunos" name="qtd-alunos" min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="observacoes">Observações Adicionais</label>
+                    <textarea id="observacoes" name="observacoes" rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar Informações</button>
+            </form>
+        </section>
     </main>
 
     <footer>
@@ -289,28 +295,10 @@
     </footer>
 
     <script>
-        
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-       
-        window.addEventListener('scroll', () => {
-            const categories = document.querySelectorAll('.links-category');
-            categories.forEach(category => {
-                const categoryTop = category.getBoundingClientRect().top;
-                const triggerBottom = window.innerHeight * 0.8;
-                
-                if(categoryTop < triggerBottom) {
-                    category.style.opacity = '1';
-                    category.style.transform = 'translateY(0)';
-                }
-            });
+        document.getElementById('escola-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Formulário enviado com sucesso! Em breve entraremos em contato.');
+            this.reset();
         });
     </script>
 </body>
